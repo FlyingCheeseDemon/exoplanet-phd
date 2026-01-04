@@ -4,6 +4,8 @@ extends CanvasLayer
 @onready var camera:Camera2D = $Camera2D
 @onready var buildings:Node = $Buildings
 
+signal world_map_cell_clicked
+
 func _ready() -> void:
 	for building in buildings.get_children():
 		update_building_position(building)
@@ -83,10 +85,4 @@ func update_building_position(building:Building) -> void:
 	building.position = world_position
 
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
-	if event.button_index == MOUSE_BUTTON_LEFT:
-		var new_building = Building.constructor(load("res://assets/buildings/test_small.tres"),Vector2i(0,0))
-		add_building(new_building,position)
-	elif event.button_index == MOUSE_BUTTON_RIGHT:
-		var new_building = Building.constructor(load("res://assets/buildings/test_medium.tres"),Vector2i(0,0))
-		add_building(new_building,position)
-		
+	emit_signal("world_map_cell_clicked", event, position)

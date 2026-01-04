@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://b3ou4tybdq6r"]
+[gd_scene load_steps=8 format=4 uid="uid://b3ou4tybdq6r"]
 
 [ext_resource type="Script" uid="uid://cdk0qox14sueo" path="res://scenes/world_scenes/world.gd" id="1_4wyf3"]
 [ext_resource type="TileSet" uid="uid://wq2fpuh0mids" path="res://assets/world_tileset.tres" id="2_ikkem"]
 [ext_resource type="Script" uid="uid://curff0ybkit4y" path="res://scenes/world_scenes/world_tile_map.gd" id="3_2ti7m"]
 [ext_resource type="Script" uid="uid://ey1sox1fu3s3" path="res://scenes/building.gd" id="4_jyr2a"]
 [ext_resource type="Resource" uid="uid://b7ougyucqnjdf" path="res://assets/buildings/test_small.tres" id="5_74fly"]
+[ext_resource type="PackedScene" uid="uid://bv6jk10mu6d2b" path="res://scenes/build_menu_scenes/drag_preview.tscn" id="6_74fly"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_jyr2a"]
 frequency = 0.0546
@@ -31,5 +32,7 @@ range_factor = 0.1
 script = ExtResource("4_jyr2a")
 data = ExtResource("5_74fly")
 metadata/_custom_type_script = "uid://ey1sox1fu3s3"
+
+[node name="DragPreview" parent="." instance=ExtResource("6_74fly")]
 
 [connection signal="cell_clicked" from="WorldMap" to="." method="_on_world_map_cell_clicked"]

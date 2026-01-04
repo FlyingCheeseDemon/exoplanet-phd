@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var build_menu:Control = $BuildMenu
 @onready var build_tab_container:TabContainer = $BuildMenu/BuildTabContainer
+@onready var drag_preview:Control = $DragPreview
 
 var available_buildings:Array[BuildingData] = []
 
@@ -19,6 +20,14 @@ func update_available_buildings() -> void:
 	for building in available_buildings:
 		var display_element := BuildingPreview.constructor(building)
 		build_tab_container.get_child(0).add_child(display_element)
+		display_element.connect("gui_input",_on_building_selected_from_bar.bind(display_element.data))
+
+func _on_building_selected_from_bar(event:InputEvent,building_data:BuildingData) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			if get_node("/root/Main").drag_preview.dragged_building == null:
+				var building := Building.constructor(building_data,Vector2i(0,0))
+				get_node("/root/Main").drag_preview.dragged_building = building
 
 func _ready() -> void:
 	available_buildings.append(load("res://assets/buildings/test_small.tres"))

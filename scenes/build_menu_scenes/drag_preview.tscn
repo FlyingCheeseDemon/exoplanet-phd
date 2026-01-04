@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv6jk10mu6d2b"]
+
+[ext_resource type="Script" uid="uid://chhd1ayq0hvlo" path="res://scenes/build_menu_scenes/drag_preview.gd" id="1_t1xpd"]
+
+[node name="DragPreview" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("1_t1xpd")
+
+[node name="BuildingIcon" type="Sprite2D" parent="."]
