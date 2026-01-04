@@ -1,5 +1,7 @@
 extends TileMapLayer
 
+signal cell_clicked
+
 const world_atlas_id = 0
 const water_tiles:Array[Vector2] = [Vector2(0,0)]
 const soil_tiles:Array[Vector2] = [Vector2(1,0),Vector2(2,0)]
@@ -10,12 +12,14 @@ const soil_tiles:Array[Vector2] = [Vector2(1,0),Vector2(2,0)]
 @export var range_factor:float = 0.01
 @export var render_range:int = 50
 
+var terrain_index:Dictionary = {}
+
 func _input(event:InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+		if event.is_pressed():
 			var global_clicked:Vector2 = get_local_mouse_position()
 			var pos_clicked:Vector2i = local_to_map(to_local(global_clicked))
-			print(pos_clicked)
+			cell_clicked.emit(event,pos_clicked)
 
 func _ready() -> void:
 	perlin_noise.seed = randi()
@@ -32,5 +36,6 @@ func _ready() -> void:
 				tile_inx = 2
 			
 			var tile_coordinate = tile_set.get_source(world_atlas_id).get_tile_id(tile_inx)
+			terrain_index[Vector2i(i,j)] = tile_inx
 			set_cell(coord,world_atlas_id,tile_coordinate)
 	
