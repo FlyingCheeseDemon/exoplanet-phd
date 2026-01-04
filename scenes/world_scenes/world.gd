@@ -88,5 +88,6 @@ func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -
 		var new_building = Building.constructor(load("res://assets/buildings/test_small.tres"),Vector2i(0,0))
 		add_building(new_building,position)
 	elif event.button_index == MOUSE_BUTTON_RIGHT:
-		remove_building(position)
+		var new_building = Building.constructor(load("res://assets/buildings/test_medium.tres"),Vector2i(0,0))
+		add_building(new_building,position)
 		

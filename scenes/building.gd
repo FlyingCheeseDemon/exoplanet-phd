@@ -14,3 +14,4 @@ static func constructor(dat:Building_data,location:Vector2i) -> Building:
 
 func _ready() -> void:
 	texture = data.texture
+	offset = data.texture_offset
