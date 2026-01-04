@@ -16,4 +16,3 @@ static func constructor(data:BuildingData) -> Building:
 func _ready() -> void:
 	icon_container.texture = data.texture
 	label_container.text = data.name
-	size[1] = icon_container.size[1] + 20
