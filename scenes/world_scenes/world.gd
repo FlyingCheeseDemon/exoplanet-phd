@@ -35,7 +35,6 @@ func check_place_building(building:Building, coordinate:Vector2i) -> bool:
 	# check if building can be placed there
 	for position in building.data.occupancy:
 		var global_coordinate = coordinate + position
-		print(world_map.get_cell_source_id(global_coordinate))
 		if global_coordinate in occupancy_dict and occupancy_dict[global_coordinate] != null:
 			print("Occupied")
 			return false

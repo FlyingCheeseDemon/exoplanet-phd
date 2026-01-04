@@ -9,6 +9,7 @@ region = Rect2(217.96661, 15.218575, 306.06183, 331.99924)
 
 [resource]
 script = ExtResource("1_a8b4n")
+name = "Test medium"
 texture = SubResource("AtlasTexture_dxs3a")
 occupancy = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, 1), Vector2i(-1, 1)])
 texture_offset = Vector2(70, 90)

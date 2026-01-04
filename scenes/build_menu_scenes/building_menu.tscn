@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvf7mml1pqmkt"]
+
+[ext_resource type="Script" uid="uid://byoxg6lf0ytfi" path="res://scenes/build_menu_scenes/building_menu.gd" id="1_6taao"]
+
+[node name="BuildingMenu" type="CanvasLayer"]
+script = ExtResource("1_6taao")
+
+[node name="BuildMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -121.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BuildTabContainer" type="TabContainer" parent="BuildMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Basic" type="HBoxContainer" parent="BuildMenu/BuildTabContainer"]
+layout_direction = 2
+layout_mode = 2
+metadata/_tab_index = 0

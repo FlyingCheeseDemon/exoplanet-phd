@@ -14,7 +14,8 @@ const soil_tiles:Array[Vector2] = [Vector2(1,0),Vector2(2,0)]
 
 var terrain_index:Dictionary = {}
 
-func _input(event:InputEvent) -> void:
+func _unhandled_input(event:InputEvent) -> void:
+	
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			var global_clicked:Vector2 = get_local_mouse_position()
