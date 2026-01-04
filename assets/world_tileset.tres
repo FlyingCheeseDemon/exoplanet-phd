@@ -1,0 +1,21 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://wq2fpuh0mids"]
+
+[ext_resource type="Texture2D" uid="uid://bkrbg454nm8dt" path="res://assets/world_tilemap.png" id="1_m5jpl"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gxx1e"]
+texture = ExtResource("1_m5jpl")
+margins = Vector2i(16, 20)
+separation = Vector2i(6, 0)
+texture_region_size = Vector2i(212, 179)
+0:0/0 = 0
+0:0/0/modulate = Color(0.3764706, 0.8666667, 1, 1)
+1:0/0 = 0
+1:0/0/modulate = Color(0.3784646, 0.16908905, 0.15024516, 1)
+2:0/0 = 0
+2:0/0/modulate = Color(0.38039216, 0.16862746, 0.14901961, 1)
+
+[resource]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(209, 179)
+sources/0 = SubResource("TileSetAtlasSource_gxx1e")

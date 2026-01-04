@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=4 uid="uid://b3ou4tybdq6r"]
+
+[ext_resource type="Script" uid="uid://cdk0qox14sueo" path="res://scenes/world_scenes/world.gd" id="1_4wyf3"]
+[ext_resource type="TileSet" uid="uid://wq2fpuh0mids" path="res://assets/world_tileset.tres" id="2_ikkem"]
+[ext_resource type="Script" uid="uid://curff0ybkit4y" path="res://scenes/world_scenes/world_tile_map.gd" id="3_2ti7m"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jyr2a"]
+frequency = 0.0546
+
+[node name="World" type="CanvasLayer"]
+follow_viewport_enabled = true
+script = ExtResource("1_4wyf3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.18, 0.18)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD9/wAAAAAAAAAAAAD+/wAAAAABAAAAAAD/////AAAAAAAAAAABAP7/AAABAAAAAAACAP7/AAABAAAAAAABAP//AAABAAAAAAAAAAAAAAABAAAAAAD//wAAAAABAAAAAAD+////AAABAAAAAAD///7/AAABAAAAAAABAAAAAAABAAAAAAAAAAEAAAABAAAAAAD//wEAAAABAAAAAAD+/wEAAAAAAAAAAAA=")
+tile_set = ExtResource("2_ikkem")
+script = ExtResource("3_2ti7m")
+perlin_noise = SubResource("FastNoiseLite_jyr2a")
+water_threshold = -0.3
+mountain_threshold = 0.3
+range_factor = 0.1
