@@ -12,8 +12,6 @@ const soil_tiles:Array[Vector2] = [Vector2(1,0),Vector2(2,0)]
 @export var range_factor:float = 0.01
 @export var render_range:int = 50
 
-var terrain_index:Dictionary = {}
-
 func _unhandled_input(event:InputEvent) -> void:
 	
 	if event is InputEventMouseButton:
@@ -37,6 +35,5 @@ func _ready() -> void:
 				tile_inx = 2
 			
 			var tile_coordinate = tile_set.get_source(world_atlas_id).get_tile_id(tile_inx)
-			terrain_index[Vector2i(i,j)] = tile_inx
 			set_cell(coord,world_atlas_id,tile_coordinate)
 	
