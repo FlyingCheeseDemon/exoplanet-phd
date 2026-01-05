@@ -10,6 +10,10 @@ func _ready() -> void:
 	for building in buildings.get_children():
 		update_building_position(building)
 		occupancy_dict[building.coordinate] = building
+	
+	var land_color:Color = Color.from_hsv(randf(),randf_range(0,0.8),randf_range(0.7,1))
+	var water_color:Color = Color.from_hsv(randf(),randf_range(0,land_color.s),randf_range(land_color.v,1))
+	recolor_world(water_color,land_color)
 
 var pan_speed:float = 10
 
@@ -68,17 +72,35 @@ func remove_building(coordinate:Vector2i) -> bool:
 	
 	return true
 
+func update_occupancy_debug_view() -> void:
+	pass
+	
+func recolor_world(water_color:Color,terrain_color:Color) -> void:
+	var tiles_colored:Array[bool] = [false,false,false]
+	for i in range(-100,100):
+		for j in range(-100,100):
+			if world_map.terrain_index[Vector2i(i,j)] == 0:
+				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = water_color
+			else:
+				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = terrain_color
+				
+			tiles_colored[world_map.terrain_index[Vector2i(i,j)]] = true
+			if tiles_colored[0] and tiles_colored[1] and tiles_colored[2]:
+				return
+
 func add_building_occupancy(building:Building) -> void:
 	var coordinate := building.coordinate
 	for position in building.data.occupancy:
 		var global_coordinate = coordinate + position
 		occupancy_dict[global_coordinate] = building
+	update_occupancy_debug_view()
 		
 func remove_building_occupancy(building:Building) -> void:
 	var coordinate := building.coordinate
 	for position in building.data.occupancy:
 		var global_coordinate = coordinate + position
 		occupancy_dict[global_coordinate] = null
+	update_occupancy_debug_view()
 
 func update_building_position(building:Building) -> void:
 	var world_position:Vector2 = world_map.map_to_local(building.coordinate)

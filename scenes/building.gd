@@ -17,3 +17,6 @@ static func constructor(dat:BuildingData,location:Vector2i) -> Building:
 func _ready() -> void:
 	texture = data.texture
 	offset = data.texture_offset
+
+func rotate_60() -> void:
+	orientation = (orientation + 1) % 6
