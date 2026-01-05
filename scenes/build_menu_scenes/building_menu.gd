@@ -2,7 +2,6 @@ extends CanvasLayer
 
 @onready var build_menu:Control = $BuildMenu
 @onready var build_tab_container:TabContainer = $BuildMenu/BuildTabContainer
-@onready var drag_preview:Control = $DragPreview
 
 var available_buildings:Array[BuildingData] = []
 
