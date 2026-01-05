@@ -20,3 +20,5 @@ func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -
 			var path:Array[Vector2i] = world.plot_course(our_worker.coordinate,position)
 			our_worker.queued_movement = path
 			print(world.workers.get_child(0).queued_movement)
+	elif event.button_index == MOUSE_BUTTON_RIGHT:
+		print(world.world_map.hex_len(position))

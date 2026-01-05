@@ -11,6 +11,7 @@ region = Rect2(9.754272, 10.1588745, 88.446594, 79.8873)
 script = ExtResource("1_ckcga")
 contained_resource = 1
 contained_amount = 20
+color_tag = 2
 name = "Small rock pile"
 texture = SubResource("AtlasTexture_0r06s")
 build_restriction = 2

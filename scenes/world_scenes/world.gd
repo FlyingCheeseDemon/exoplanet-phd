@@ -10,6 +10,11 @@ const HEX_DIRECTIONS:Array[Vector2i] = [Vector2i(0,1),Vector2i(0,-1),Vector2i(1,
 
 signal world_map_cell_clicked
 
+@export var randomize_colors:bool = true
+@export var water_color:Color
+@export var land_color:Color
+var color_tag_array:Array[Color]
+
 func _ready() -> void:
 	for building in buildings.get_children():
 		update_world_object_position(building)
@@ -21,9 +26,16 @@ func _ready() -> void:
 		_on_worker_moved(worker)
 		worker.connect("worker_moved",_on_worker_moved)
 	
-	var land_color:Color = Color.from_hsv(randf(),randf_range(0.3,0.8),randf_range(0.7,1))
-	var water_color:Color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
+	if randomize_colors:
+		land_color = Color.from_hsv(randf(),randf_range(0.3,0.8),randf_range(0.7,1))
+		water_color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
 	recolor_world(water_color,land_color)
+	color_tag_array = [Color(),water_color,land_color]
+	
+	var new_resource_pile:ResourcePile
+	for i in range(1000):
+		new_resource_pile = ResourcePile.constructor(load("res://assets/resource_piles/rocks_small.tres"),Vector2i(0,0))
+		place_world_object_at_random(new_resource_pile)
 
 var pan_speed:float = 10
 
@@ -48,6 +60,14 @@ func _process(delta: float) -> void:
 var building_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
 var resource_pile_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
 
+func place_world_object_at_random(world_object:WorldObject):
+	var ran:int = world_map.render_range
+	var x = randi_range(-ran,ran)
+	var y = randi_range(-ran,ran)
+	while not add_world_object(world_object,Vector2i(x,y)):
+		x = randi_range(-ran,ran)
+		y = randi_range(-ran,ran)
+
 func check_placement_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
 	# check if object can be placed there
 	var occupancy_dict:Dictionary
@@ -64,18 +84,18 @@ func check_placement_world_object(world_object:WorldObject, coordinate:Vector2i)
 		for i in range(world_object.orientation):
 			position = Vector2i(-position[1],position[0]+position[1]) # hexagon grid rotation 60°
 		var global_coordinate = coordinate + position
+		if world_map.get_cell_tile_data(global_coordinate) == null:
+			return false
 		if global_coordinate in occupancy_dict and occupancy_dict[global_coordinate] != null:
 			print("Occupied")
 			return false
 		# bitwise operation to check if the current tile is allowed to be built on
 		elif not (1 << (world_map.get_cell_tile_data(global_coordinate).terrain_set) & world_object.data.build_restriction):
-			print("Invalid Terrain")
 			return false
 	return true
 
 func add_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
 	if not check_placement_world_object(world_object,coordinate):
-		print("Failed to place building")
 		return false
 	# if so update the coordinate of the building
 	world_object.coordinate = coordinate
@@ -86,8 +106,13 @@ func add_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
 		parent_node = buildings
 	elif world_object is ResourcePile:
 		parent_node = resource_piles
+		if world_object.data.color_tag != 0:
+			world_object.modulation_color = color_tag_array[world_object.data.color_tag]
+			world_object.modulated = true
+			print(world_object.data.color_tag)
+			
 	parent_node.add_child(world_object)
-	print("Building placed")
+	print("Object placed: " + world_object.data.name)
 	return true
 
 func remove_building(coordinate:Vector2i) -> bool:

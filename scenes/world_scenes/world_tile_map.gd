@@ -28,7 +28,7 @@ func _ready() -> void:
 			var coord := Vector2i(i,j)
 			var perlin_value = perlin_noise.get_noise_2d(i+j*0.5,j*sqrt(3)/2)
 			var tile_inx:int = 1
-			var distance:float = sqrt(i*i+j*j)
+			var distance:float = hex_len(Vector2i(i,j))
 			if perlin_value < water_threshold*exp(-(distance/range_factor)**2):
 				tile_inx = 0
 			elif perlin_value > mountain_threshold*exp(-(distance/range_factor)**2):
@@ -36,4 +36,12 @@ func _ready() -> void:
 			
 			var tile_coordinate = tile_set.get_source(world_atlas_id).get_tile_id(tile_inx)
 			set_cell(coord,world_atlas_id,tile_coordinate)
+
+func hex_len(vector:Vector2i) -> int:
+	if sign(vector[0]) == sign(vector[1]):
+		return abs(vector[0] + vector[1])
+	else:
+		var direction_k:int = min(abs(vector[0]),abs(vector[1]))
+		var remainder:int = abs(abs(vector[0])-abs(vector[1]))
+		return direction_k + remainder
 	

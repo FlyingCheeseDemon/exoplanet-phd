@@ -13,6 +13,8 @@ frequency = 0.0582
 [node name="World" type="CanvasLayer"]
 follow_viewport_enabled = true
 script = ExtResource("1_4wyf3")
+water_color = Color(0.729541, 0.78784907, 0.36151704, 1)
+land_color = Color(0.5985264, 0.22468913, 0.29575253, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.18, 0.18)
