@@ -39,7 +39,10 @@ var occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coor
 
 func check_place_building(building:Building, coordinate:Vector2i) -> bool:
 	# check if building can be placed there
-	for position in building.data.occupancy:
+	for position in building.data.occupancy: # vectors in godot are value types.
+		# rotate position
+		for i in range(building.orientation):
+			position = Vector2i(-position[1],position[0]+position[1]) # hexagon grid rotation 60°
 		var global_coordinate = coordinate + position
 		if global_coordinate in occupancy_dict and occupancy_dict[global_coordinate] != null:
 			print("Occupied")
@@ -72,8 +75,6 @@ func remove_building(coordinate:Vector2i) -> bool:
 	
 	return true
 
-func update_occupancy_debug_view() -> void:
-	pass
 	
 func recolor_world(water_color:Color,terrain_color:Color) -> void:
 	var tiles_colored:Array[bool] = [false,false,false]
@@ -91,20 +92,23 @@ func recolor_world(water_color:Color,terrain_color:Color) -> void:
 func add_building_occupancy(building:Building) -> void:
 	var coordinate := building.coordinate
 	for position in building.data.occupancy:
+		for i in range(building.orientation):
+			position = Vector2i(-position[1],position[0]+position[1]) # hexagon grid rotation 60°
 		var global_coordinate = coordinate + position
 		occupancy_dict[global_coordinate] = building
-	update_occupancy_debug_view()
 		
 func remove_building_occupancy(building:Building) -> void:
 	var coordinate := building.coordinate
 	for position in building.data.occupancy:
+		for i in range(building.orientation):
+			position = Vector2i(-position[1],position[0]+position[1]) # hexagon grid rotation 60°
 		var global_coordinate = coordinate + position
 		occupancy_dict[global_coordinate] = null
-	update_occupancy_debug_view()
 
 func update_building_position(building:Building) -> void:
 	var world_position:Vector2 = world_map.map_to_local(building.coordinate)
 	building.position = world_position
+	building.rotation = PI/3*building.orientation
 
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	emit_signal("world_map_cell_clicked", event, position)
