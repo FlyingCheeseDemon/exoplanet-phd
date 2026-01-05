@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var world_map:TileMapLayer = $WorldMap
 @onready var camera:Camera2D = $Camera2D
 @onready var buildings:Node = $Buildings
+@onready var resource_piles:Node = $ResourcePiles
 @onready var workers:Node = $Workers
 
 const HEX_DIRECTIONS:Array[Vector2i] = [Vector2i(0,1),Vector2i(0,-1),Vector2i(1,0),Vector2i(-1,0),Vector2i(1,-1),Vector2i(-1,1)]
@@ -11,8 +12,11 @@ signal world_map_cell_clicked
 
 func _ready() -> void:
 	for building in buildings.get_children():
-		update_building_position(building)
-		occupancy_dict[building.coordinate] = building
+		update_world_object_position(building)
+		building_occupancy_dict[building.coordinate] = building
+	for resource_pile in resource_piles.get_children():
+		update_world_object_position(resource_pile)
+		resource_pile_occupancy_dict[resource_pile.coordinate] = resource_pile
 	for worker in workers.get_children():
 		_on_worker_moved(worker)
 		worker.connect("worker_moved",_on_worker_moved)
@@ -41,42 +45,58 @@ func _process(delta: float) -> void:
 	elif Input.is_action_pressed("pan_down"):
 		camera.position[1] += pan_speed/camera.zoom[0]
 
-var occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
+var building_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
+var resource_pile_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
 
-func check_place_building(building:Building, coordinate:Vector2i) -> bool:
-	# check if building can be placed there
-	for position in building.data.occupancy: # vectors in godot are value types.
+func check_placement_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
+	# check if object can be placed there
+	var occupancy_dict:Dictionary
+	if world_object is Building:
+		occupancy_dict = building_occupancy_dict
+	elif world_object is ResourcePile:
+		occupancy_dict = resource_pile_occupancy_dict
+	else:
+		print("Unknown object type: Error in check_placement_world_object")
+		return false
+		
+	for position in world_object.data.occupancy: # vectors in godot are value types.
 		# rotate position
-		for i in range(building.orientation):
+		for i in range(world_object.orientation):
 			position = Vector2i(-position[1],position[0]+position[1]) # hexagon grid rotation 60°
 		var global_coordinate = coordinate + position
 		if global_coordinate in occupancy_dict and occupancy_dict[global_coordinate] != null:
 			print("Occupied")
 			return false
-		elif world_map.get_cell_tile_data(global_coordinate).terrain_set != 0:
+		# bitwise operation to check if the current tile is allowed to be built on
+		elif not (1 << (world_map.get_cell_tile_data(global_coordinate).terrain_set) & world_object.data.build_restriction):
 			print("Invalid Terrain")
 			return false
 	return true
 
-func add_building(building:Building, coordinate:Vector2i) -> bool:
-	if not check_place_building(building,coordinate):
+func add_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
+	if not check_placement_world_object(world_object,coordinate):
 		print("Failed to place building")
 		return false
 	# if so update the coordinate of the building
-	building.coordinate = coordinate
-	add_building_occupancy(building)
-	update_building_position(building)
-	buildings.add_child(building)
+	world_object.coordinate = coordinate
+	add_world_object_occupancy(world_object)
+	update_world_object_position(world_object)
+	var parent_node:Node
+	if world_object is Building:
+		parent_node = buildings
+	elif world_object is ResourcePile:
+		parent_node = resource_piles
+	parent_node.add_child(world_object)
 	print("Building placed")
 	return true
 
 func remove_building(coordinate:Vector2i) -> bool:
-	if not coordinate in occupancy_dict or occupancy_dict[coordinate] == null:
+	if not coordinate in building_occupancy_dict or building_occupancy_dict[coordinate] == null:
 		print("no building to remove")
 		return false
 	
-	var building_to_remove:Building = occupancy_dict[coordinate]
-	remove_building_occupancy(building_to_remove)
+	var building_to_remove:Building = building_occupancy_dict[coordinate]
+	remove_world_object_occupancy(building_to_remove)
 	building_to_remove.queue_free()
 	
 	return true
@@ -85,7 +105,7 @@ func recolor_world(water_color:Color,terrain_color:Color) -> void:
 	var tiles_colored:Array[bool] = [false,false,false]
 	for i in range(-100,100):
 		for j in range(-100,100):
-			if world_map.get_cell_tile_data(Vector2i(i,j)).terrain_set == 1:
+			if world_map.get_cell_tile_data(Vector2i(i,j)).terrain_set == 0:
 				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = water_color
 			else:
 				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = terrain_color
@@ -94,26 +114,37 @@ func recolor_world(water_color:Color,terrain_color:Color) -> void:
 			if tiles_colored[0] and tiles_colored[1] and tiles_colored[2]:
 				return
 
-func add_building_occupancy(building:Building) -> void:
-	var coordinate := building.coordinate
-	for position in building.data.occupancy:
-		for i in range(building.orientation):
+func add_world_object_occupancy(world_object:WorldObject) -> void:
+	var occupancy_dict:Dictionary
+	if world_object is Building:
+		occupancy_dict = building_occupancy_dict
+	elif world_object is ResourcePile:
+		occupancy_dict = resource_pile_occupancy_dict
+		
+	var coordinate := world_object.coordinate
+	for position in world_object.data.occupancy:
+		for i in range(world_object.orientation):
 			position = Vector2i(-position[1],position[0]+position[1]) # hexagon grid rotation 60°
 		var global_coordinate = coordinate + position
-		occupancy_dict[global_coordinate] = building
+		occupancy_dict[global_coordinate] = world_object
 		
-func remove_building_occupancy(building:Building) -> void:
-	var coordinate := building.coordinate
-	for position in building.data.occupancy:
-		for i in range(building.orientation):
+func remove_world_object_occupancy(world_object:WorldObject) -> void:
+	var occupancy_dict:Dictionary
+	if world_object is Building:
+		occupancy_dict = building_occupancy_dict
+	elif world_object is ResourcePile:
+		occupancy_dict = resource_pile_occupancy_dict
+	var coordinate := world_object.coordinate
+	for position in world_object.data.occupancy:
+		for i in range(world_object.orientation):
 			position = Vector2i(-position[1],position[0]+position[1]) # hexagon grid rotation 60°
 		var global_coordinate = coordinate + position
 		occupancy_dict[global_coordinate] = null
 
-func update_building_position(building:Building) -> void:
-	var world_position:Vector2 = world_map.map_to_local(building.coordinate)
-	building.position = world_position
-	building.rotation = PI/3*building.orientation
+func update_world_object_position(world_object:WorldObject) -> void:
+	var world_position:Vector2 = world_map.map_to_local(world_object.coordinate)
+	world_object.position = world_position
+	world_object.rotation = PI/3*world_object.orientation
 	
 func _on_worker_moved(worker:Worker) -> void:
 	var world_position:Vector2 = world_map.map_to_local(worker.coordinate)
@@ -136,7 +167,7 @@ func plot_course(start:Vector2i,end:Vector2i) -> Array[Vector2i]:
 		var current_position = frontier_queue.pop_front()
 		for direction in HEX_DIRECTIONS:
 			var next_position:Vector2i = current_position + direction
-			if world_map.get_cell_tile_data(next_position).terrain_set != 0:
+			if world_map.get_cell_tile_data(next_position).terrain_set != 1:
 				continue # impassable
 			if next_position in next_tile_to_goal.keys():
 				continue # already visited

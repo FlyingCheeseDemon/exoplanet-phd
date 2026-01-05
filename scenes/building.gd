@@ -1,22 +1,10 @@
-extends Sprite2D
+extends WorldObject
 
 class_name Building
-const self_scene:PackedScene = preload("res://scenes/building.tscn")
-
-@export var coordinate:Vector2i
-@export var data:BuildingData
-
-var orientation:int = 0
+const self_scene = preload("res://scenes/building.tscn")
 
 static func constructor(dat:BuildingData,location:Vector2i) -> Building:
 	var obj := self_scene.instantiate()
 	obj.coordinate = location
 	obj.data = dat
 	return obj
-
-func _ready() -> void:
-	texture = data.texture
-	offset = data.texture_offset
-
-func rotate_60() -> void:
-	orientation = (orientation + 1) % 6

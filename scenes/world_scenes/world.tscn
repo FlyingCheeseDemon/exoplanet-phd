@@ -29,6 +29,8 @@ render_range = 100
 
 [node name="Buildings" type="Node" parent="."]
 
+[node name="ResourcePiles" type="Node" parent="."]
+
 [node name="Workers" type="Node" parent="."]
 
 [node name="Worker" parent="Workers" instance=ExtResource("4_jyr2a")]

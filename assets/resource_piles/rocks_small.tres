@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ResourcePileData" load_steps=4 format=3 uid="uid://usrksrk6hvx6"]
+
+[ext_resource type="Script" uid="uid://cglmt5sttmtic" path="res://scripts/ressource_pile_data.gd" id="1_ckcga"]
+[ext_resource type="Texture2D" uid="uid://bskufxhcgh2uq" path="res://assets/icons.png" id="2_v1cy8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0r06s"]
+atlas = ExtResource("2_v1cy8")
+region = Rect2(9.754272, 10.1588745, 88.446594, 79.8873)
+
+[resource]
+script = ExtResource("1_ckcga")
+contained_resource = 1
+contained_amount = 20
+name = "Small rock pile"
+texture = SubResource("AtlasTexture_0r06s")
+build_restriction = 2
+metadata/_custom_type_script = "uid://cglmt5sttmtic"
