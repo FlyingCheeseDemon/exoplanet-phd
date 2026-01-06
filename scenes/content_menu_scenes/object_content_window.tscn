@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhoobmnrxu6gw"]
+
+[ext_resource type="Script" uid="uid://bptm3vwqpofv8" path="res://scenes/content_menu_scenes/object_content_window.gd" id="1_mv7yy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mv7yy"]
+line_spacing = 0.0
+
+[node name="ObjectContentWindow" type="CanvasLayer"]
+script = ExtResource("1_mv7yy")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 808.0
+offset_top = 17.0
+offset_right = 1130.0
+offset_bottom = 405.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.26293245, 0.26293245, 0.26293245, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ColorRect" type="ColorRect" parent="Control/MarginContainer"]
+layout_mode = 2
+color = Color(0.28517988, 0.3463427, 0.4223345, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelName" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Name"
+
+[node name="LabelInfo" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "bla bla
+bla
+"
+label_settings = SubResource("LabelSettings_mv7yy")
+autowrap_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0.083678864, 0.24163589, 0.34660566, 1)
+
+[node name="ActionContainer" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2

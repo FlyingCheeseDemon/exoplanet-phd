@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var buildings:Node = $Buildings
 @onready var resource_piles:Node = $ResourcePiles
 @onready var workers:Node = $Workers
+@onready var drag_preview:Control = $DragPreview
 
 const HEX_DIRECTIONS:Array[Vector2i] = [Vector2i(0,1),Vector2i(0,-1),Vector2i(1,0),Vector2i(-1,0),Vector2i(1,-1),Vector2i(-1,1)]
 
@@ -32,10 +33,6 @@ func _ready() -> void:
 	recolor_world(water_color,land_color)
 	color_tag_array = [Color(),water_color,land_color]
 	
-	var new_resource_pile:ResourcePile
-	for i in range(1000):
-		new_resource_pile = ResourcePile.constructor(load("res://assets/resource_piles/rocks_small.tres"),Vector2i(0,0))
-		place_world_object_at_random(new_resource_pile)
 
 var pan_speed:float = 10
 
@@ -59,6 +56,11 @@ func _process(delta: float) -> void:
 
 var building_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
 var resource_pile_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
+
+var type_occupancy_dict_dict:Dictionary = {
+	Building: building_occupancy_dict,
+	ResourcePile: resource_pile_occupancy_dict
+}
 
 func place_world_object_at_random(world_object:WorldObject):
 	var ran:int = world_map.render_range
@@ -87,7 +89,7 @@ func check_placement_world_object(world_object:WorldObject, coordinate:Vector2i)
 		if world_map.get_cell_tile_data(global_coordinate) == null:
 			return false
 		if global_coordinate in occupancy_dict and occupancy_dict[global_coordinate] != null:
-			print("Occupied")
+			#print("Occupied")
 			return false
 		# bitwise operation to check if the current tile is allowed to be built on
 		elif not (1 << (world_map.get_cell_tile_data(global_coordinate).terrain_set) & world_object.data.build_restriction):
@@ -109,10 +111,9 @@ func add_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
 		if world_object.data.color_tag != 0:
 			world_object.modulation_color = color_tag_array[world_object.data.color_tag]
 			world_object.modulated = true
-			print(world_object.data.color_tag)
 			
 	parent_node.add_child(world_object)
-	print("Object placed: " + world_object.data.name)
+	#print("Object placed: " + world_object.data.name)
 	return true
 
 func remove_building(coordinate:Vector2i) -> bool:
@@ -126,14 +127,22 @@ func remove_building(coordinate:Vector2i) -> bool:
 	
 	return true
 
-func recolor_world(water_color:Color,terrain_color:Color) -> void:
+func get_objects_at_location(position:Vector2i) -> Array[WorldObject]:
+	var objects:Array[WorldObject] = []
+	for key in type_occupancy_dict_dict:
+		var current_dict = type_occupancy_dict_dict[key]
+		if position in current_dict and current_dict[position] != null:
+			objects.append(current_dict[position])
+	return objects
+
+func recolor_world(w_color:Color,l_color:Color) -> void:
 	var tiles_colored:Array[bool] = [false,false,false]
 	for i in range(-100,100):
 		for j in range(-100,100):
 			if world_map.get_cell_tile_data(Vector2i(i,j)).terrain_set == 0:
-				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = water_color
+				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = w_color
 			else:
-				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = terrain_color
+				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = l_color
 				
 			tiles_colored[world_map.get_cell_tile_data(Vector2i(i,j)).terrain_set] = true
 			if tiles_colored[0] and tiles_colored[1] and tiles_colored[2]:

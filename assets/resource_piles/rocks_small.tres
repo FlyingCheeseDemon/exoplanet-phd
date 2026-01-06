@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="ResourcePileData" load_steps=4 format=3 uid="uid://usrksrk6hvx6"]
+[gd_resource type="Resource" script_class="ResourcePileData" load_steps=6 format=3 uid="uid://usrksrk6hvx6"]
 
+[ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="1_0r06s"]
 [ext_resource type="Script" uid="uid://cglmt5sttmtic" path="res://scripts/ressource_pile_data.gd" id="1_ckcga"]
+[ext_resource type="Resource" uid="uid://c6t52w32nub6m" path="res://assets/resource_piles/collect.tres" id="2_uvv2s"]
 [ext_resource type="Texture2D" uid="uid://bskufxhcgh2uq" path="res://assets/icons.png" id="2_v1cy8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0r06s"]
@@ -15,4 +17,5 @@ color_tag = 2
 name = "Small rock pile"
 texture = SubResource("AtlasTexture_0r06s")
 build_restriction = 2
+actions = Array[ExtResource("1_0r06s")]([ExtResource("2_uvv2s")])
 metadata/_custom_type_script = "uid://cglmt5sttmtic"

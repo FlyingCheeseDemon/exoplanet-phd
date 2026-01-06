@@ -29,9 +29,9 @@ mountain_threshold = 0.37
 range_factor = 70.0
 render_range = 100
 
-[node name="Buildings" type="Node" parent="."]
-
 [node name="ResourcePiles" type="Node" parent="."]
+
+[node name="Buildings" type="Node" parent="."]
 
 [node name="Workers" type="Node" parent="."]
 
