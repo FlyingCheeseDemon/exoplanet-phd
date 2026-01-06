@@ -1,7 +1,7 @@
 extends WorldObject
 
 class_name ResourcePile
-const self_scene:PackedScene = preload("res://scenes/ressource_pile.tscn")
+const self_scene:PackedScene = preload("res://scenes/world_objects/ressource_pile.tscn")
 
 var current_contained_amount
 

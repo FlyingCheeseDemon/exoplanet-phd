@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://uq8lryihckar"]
 
-[ext_resource type="Script" uid="uid://qw4c8c2d0ci4" path="res://scenes/ressource_pile.gd" id="1_rd58b"]
+[ext_resource type="Script" uid="uid://qw4c8c2d0ci4" path="res://scenes/world_objects/ressource_pile.gd" id="1_rd58b"]
 
 [node name="Ressource_pile" type="Sprite2D"]
 script = ExtResource("1_rd58b")

@@ -14,9 +14,10 @@ signal worker_moved
 @export var gathering_speed:float = 0.2 # units/second
 @export var inventory_size:int = 10
 
+var current_task:Task
+
 var movement_delay_ctr:float = 0
 var queued_movement:Array[Vector2i] = []
-
 
 static func constructor(location:Vector2i) -> Worker:
 	var obj := self_scene.instantiate()
@@ -24,6 +25,17 @@ static func constructor(location:Vector2i) -> Worker:
 	return obj
 	
 func _process(delta: float) -> void:
+	if current_task != null:
+		pass
+		# TODO attempt to do task
+		# this means: check for required ressources
+		# if they exist: where to find them
+		# plot route to fetch resources and bring them to the task location
+		# (route plotting is done by the world_map, need to query somehow)
+		# move resources to task location
+		# execute task
+		# bring resulting resources to storage?
+	
 	if len(queued_movement) > 0:
 		movement_delay_ctr += delta
 		if movement_delay_ctr >= 1/movement_speed:

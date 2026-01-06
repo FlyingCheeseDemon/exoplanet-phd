@@ -15,6 +15,7 @@ contained_resource = 1
 contained_amount = 20
 color_tag = 2
 name = "Small rock pile"
+info = "I'm a small pile of rocks"
 texture = SubResource("AtlasTexture_0r06s")
 build_restriction = 2
 actions = Array[ExtResource("1_0r06s")]([ExtResource("2_uvv2s")])

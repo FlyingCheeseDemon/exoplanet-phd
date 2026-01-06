@@ -3,6 +3,8 @@ extends VBoxContainer
 class_name ActionDisplay
 const self_scene:PackedScene = preload("res://scenes/content_menu_scenes/action_display.tscn")
 
+signal action_button_pressed
+
 @onready var info_label:Label = $Label
 @onready var action_button:Button = $Button
 
@@ -22,3 +24,7 @@ static func constructor(associated_action:ObjectAction,associated_object:WorldOb
 func _ready() -> void:
 	info_label.text = info_text
 	action_button.text = button_text
+
+func _on_button_button_down() -> void:
+	var task:Task = Task.constructor(world_object,action)
+	action_button_pressed.emit(task)

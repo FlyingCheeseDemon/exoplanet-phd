@@ -1,0 +1,7 @@
+enum RESOURCE_TYPES {
+	SOIL,
+	STONE,
+	WATER,
+	SCIENCE,
+	GAS
+}

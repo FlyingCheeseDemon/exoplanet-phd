@@ -3,9 +3,11 @@ extends Node
 @onready var world:CanvasLayer = $World
 @onready var drag_preview:Control = world.drag_preview
 @onready var obj_content_window:CanvasLayer = $ObjectContentWindow
+@onready var action_queue:Node = $ActionQueue
 
 func _ready() -> void:
 	world.connect("world_map_cell_clicked",_on_world_map_cell_clicked)
+	obj_content_window.connect("action_added",_on_action_added)
 	
 	var new_resource_pile:ResourcePile
 	for i in range(1000):
@@ -14,6 +16,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	pass
+
+func _on_action_added(task:Task) -> void:
+	action_queue.add_child(task)
+	print(action_queue.get_child_count())
 
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT:

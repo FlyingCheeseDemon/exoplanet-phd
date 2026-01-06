@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ObjectAction" load_steps=2 format=3 uid="uid://c6t52w32nub6m"]
+[gd_resource type="Resource" script_class="ObjectAction" load_steps=3 format=3 uid="uid://c6t52w32nub6m"]
 
 [ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="1_cuwqg"]
+[ext_resource type="Script" uid="uid://ndreboypniik" path="res://scripts/requirement.gd" id="1_h5g55"]
 
 [resource]
 script = ExtResource("1_cuwqg")
