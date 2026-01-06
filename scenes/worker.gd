@@ -4,6 +4,8 @@ class_name Worker
 const self_scene:PackedScene = preload("res://scenes/worker.tscn")
 
 signal worker_moved
+signal task_started
+signal task_ended
 
 @export_group("Initialization")
 @export var coordinate:Vector2i
@@ -14,7 +16,8 @@ signal worker_moved
 @export var gathering_speed:float = 0.2 # units/second
 @export var inventory_size:int = 10
 
-var current_task:Task
+var current_task:Task:
+	set = set_task
 
 var movement_delay_ctr:float = 0
 var queued_movement:Array[Vector2i] = []
@@ -24,6 +27,14 @@ static func constructor(location:Vector2i) -> Worker:
 	obj.coordinate = location
 	return obj
 	
+func set_task(new_task:Task) -> void:
+	current_task = new_task
+	if new_task == null:
+		task_ended.emit(self)
+	else:
+		task_started.emit(self)
+
+
 func _process(delta: float) -> void:
 	if current_task != null:
 		pass

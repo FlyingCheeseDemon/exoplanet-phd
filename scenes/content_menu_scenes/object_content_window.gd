@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-signal action_added
+signal task_added
 
 @onready var name_label:Label = $Control/MarginContainer/MarginContainer/VBoxContainer/LabelName
 @onready var info_label:Label = $Control/MarginContainer/MarginContainer/VBoxContainer/LabelInfo
@@ -18,4 +18,4 @@ func display_object(world_object:WorldObject) -> void:
 	visible = true
 
 func _on_action_button_pressed(task:Task) -> void:
-	action_added.emit(task)
+	task_added.emit(task)

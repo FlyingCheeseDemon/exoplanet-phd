@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cdk0qox14sueo" path="res://scenes/world_scenes/world.gd" id="1_4wyf3"]
 [ext_resource type="TileSet" uid="uid://wq2fpuh0mids" path="res://assets/world_tileset.tres" id="2_ikkem"]
 [ext_resource type="Script" uid="uid://curff0ybkit4y" path="res://scenes/world_scenes/world_tile_map.gd" id="3_2ti7m"]
-[ext_resource type="PackedScene" uid="uid://bshfvys4o8d7r" path="res://scenes/worker.tscn" id="4_jyr2a"]
+[ext_resource type="Script" uid="uid://bq3qer2qa1ayc" path="res://scenes/world_scenes/workers.gd" id="4_74fly"]
 [ext_resource type="PackedScene" uid="uid://bv6jk10mu6d2b" path="res://scenes/build_menu_scenes/drag_preview.tscn" id="6_74fly"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_jyr2a"]
@@ -34,8 +34,7 @@ render_range = 100
 [node name="Buildings" type="Node" parent="."]
 
 [node name="Workers" type="Node" parent="."]
-
-[node name="Worker" parent="Workers" instance=ExtResource("4_jyr2a")]
+script = ExtResource("4_74fly")
 
 [node name="DragPreview" parent="." instance=ExtResource("6_74fly")]
 

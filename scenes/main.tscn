@@ -15,4 +15,4 @@ script = ExtResource("1_o5qli")
 [node name="ObjectContentWindow" parent="." instance=ExtResource("4_jyhfs")]
 visible = false
 
-[node name="ActionQueue" type="Node" parent="."]
+[node name="TaskQueue" type="Node" parent="."]

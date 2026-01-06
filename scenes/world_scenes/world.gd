@@ -124,7 +124,16 @@ func remove_building(coordinate:Vector2i) -> bool:
 	var building_to_remove:Building = building_occupancy_dict[coordinate]
 	remove_world_object_occupancy(building_to_remove)
 	building_to_remove.queue_free()
+	return true
 	
+func remove_resource_pile(coordinate:Vector2i) -> bool:
+	if not coordinate in resource_pile_occupancy_dict or resource_pile_occupancy_dict[coordinate] == null:
+		print("no resource pile to remove")
+		return false
+	
+	var pile_to_remove:ResourcePile = resource_pile_occupancy_dict[coordinate]
+	remove_world_object_occupancy(pile_to_remove)
+	pile_to_remove.queue_free()
 	return true
 
 func get_objects_at_location(position:Vector2i) -> Array[WorldObject]:
@@ -183,6 +192,15 @@ func update_world_object_position(world_object:WorldObject) -> void:
 func _on_worker_moved(worker:Worker) -> void:
 	var world_position:Vector2 = world_map.map_to_local(worker.coordinate)
 	worker.position = world_position
+	
+func add_worker(position:Vector2i) -> void:
+	var new_worker = Worker.constructor(position)
+	workers.add_child(new_worker)
+	new_worker.connect("worker_moved",_on_worker_moved)
+	new_worker.connect("task_started",workers._on_task_started)
+	new_worker.connect("task_ended",workers._on_task_ended)
+	new_worker.task_ended.emit(new_worker)
+	_on_worker_moved(new_worker)
 	
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	emit_signal("world_map_cell_clicked", event, position)

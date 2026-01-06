@@ -3,23 +3,42 @@ extends Node
 @onready var world:CanvasLayer = $World
 @onready var drag_preview:Control = world.drag_preview
 @onready var obj_content_window:CanvasLayer = $ObjectContentWindow
-@onready var action_queue:Node = $ActionQueue
+@onready var task_queue:Node = $TaskQueue
 
 func _ready() -> void:
 	world.connect("world_map_cell_clicked",_on_world_map_cell_clicked)
-	obj_content_window.connect("action_added",_on_action_added)
+	obj_content_window.connect("task_added",_on_task_added)
 	
 	var new_resource_pile:ResourcePile
 	for i in range(1000):
 		new_resource_pile = ResourcePile.constructor(load("res://assets/resource_piles/rocks_small.tres"),Vector2i(0,0))
 		world.place_world_object_at_random(new_resource_pile)
+	
+	world.add_worker(Vector2i(0,0))
 
 func _process(delta: float) -> void:
+	# if there are tasks and there are free workers: assign task to the next worker
+	if task_queue.get_child_count() > 0 and len(world.workers.free_workers) > 0 and not task_queue.get_child(-1).being_worked_on:
+		var i:int = 0
+		while task_queue.get_child(i).being_worked_on:
+			i += 1
+		world.workers.free_workers[0].current_task = task_queue.get_child(i)
+		task_queue.get_child(i).being_worked_on = true
+		print("Task assigned to worker")
+		
+	# TODO attempt to do task
+		# this means: check for required ressources
+		# if they exist: where to find them
+		# plot route to fetch resources and bring them to the task location
+		# (route plotting is done by the world_map, need to query somehow)
+		# move resources to task location
+		# execute task
+		# bring resulting resources to storage?
 	pass
 
-func _on_action_added(task:Task) -> void:
-	action_queue.add_child(task)
-	print(action_queue.get_child_count())
+func _on_task_added(task:Task) -> void:
+	task_queue.add_child(task)
+	print(task_queue.get_child_count())
 
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT:
