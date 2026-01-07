@@ -1,0 +1,6 @@
+enum ACTIONS {
+	EXTRACT,
+	PICKUP,
+	DROPOFF,
+	BUILD
+}

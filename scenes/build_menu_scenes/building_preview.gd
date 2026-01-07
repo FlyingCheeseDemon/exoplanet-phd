@@ -8,9 +8,9 @@ const self_scene:PackedScene = preload("res://scenes/build_menu_scenes/building_
 
 var data:BuildingData
 
-static func constructor(data:BuildingData) -> Building:
+static func constructor(dat:BuildingData) -> Building:
 	var obj := self_scene.instantiate()
-	obj.data = data
+	obj.data = dat
 	return obj
 
 func _ready() -> void:

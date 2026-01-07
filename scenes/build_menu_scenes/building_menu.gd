@@ -25,7 +25,7 @@ func _on_building_selected_from_bar(event:InputEvent,building_data:BuildingData)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if get_node("/root/Main").drag_preview.dragged_building == null:
-				var building := Building.constructor(building_data,Vector2i(0,0))
+				var building := Building.constructor(building_data)
 				get_node("/root/Main").drag_preview.dragged_building = building
 
 func _ready() -> void:

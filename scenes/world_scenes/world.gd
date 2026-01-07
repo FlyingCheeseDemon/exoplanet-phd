@@ -1,13 +1,14 @@
 extends CanvasLayer
 
+class_name World
+
 @onready var world_map:TileMapLayer = $WorldMap
 @onready var camera:Camera2D = $Camera2D
 @onready var buildings:Node = $Buildings
 @onready var resource_piles:Node = $ResourcePiles
+@onready var item_piles:Node = $ItemPiles
 @onready var workers:Node = $Workers
 @onready var drag_preview:Control = $DragPreview
-
-const HEX_DIRECTIONS:Array[Vector2i] = [Vector2i(0,1),Vector2i(0,-1),Vector2i(1,0),Vector2i(-1,0),Vector2i(1,-1),Vector2i(-1,1)]
 
 signal world_map_cell_clicked
 
@@ -24,6 +25,8 @@ func _ready() -> void:
 		update_world_object_position(resource_pile)
 		resource_pile_occupancy_dict[resource_pile.coordinate] = resource_pile
 	for worker in workers.get_children():
+		if not worker is Worker:
+			continue
 		_on_worker_moved(worker)
 		worker.connect("worker_moved",_on_worker_moved)
 	
@@ -32,7 +35,6 @@ func _ready() -> void:
 		water_color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
 	recolor_world(water_color,land_color)
 	color_tag_array = [Color(),water_color,land_color]
-	
 
 var pan_speed:float = 10
 
@@ -56,10 +58,18 @@ func _process(delta: float) -> void:
 
 var building_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
 var resource_pile_occupancy_dict:Dictionary = {} # used as a hashed list for all occupied coordinates
+var item_pile_occupancy_dict:Dictionary = {}
 
 var type_occupancy_dict_dict:Dictionary = {
 	Building: building_occupancy_dict,
-	ResourcePile: resource_pile_occupancy_dict
+	ResourcePile: resource_pile_occupancy_dict,
+	ItemPile: item_pile_occupancy_dict
+}
+
+var type_root_node_dict:Dictionary = {
+	Building: buildings,
+	ResourcePile: resource_piles,
+	ItemPile: item_piles
 }
 
 func place_world_object_at_random(world_object:WorldObject):
@@ -77,6 +87,9 @@ func check_placement_world_object(world_object:WorldObject, coordinate:Vector2i)
 		occupancy_dict = building_occupancy_dict
 	elif world_object is ResourcePile:
 		occupancy_dict = resource_pile_occupancy_dict
+	elif world_object is ItemPile:
+		occupancy_dict = item_pile_occupancy_dict
+		
 	else:
 		print("Unknown object type: Error in check_placement_world_object")
 		return false
@@ -111,6 +124,8 @@ func add_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
 		if world_object.data.color_tag != 0:
 			world_object.modulation_color = color_tag_array[world_object.data.color_tag]
 			world_object.modulated = true
+	elif world_object is ItemPile:
+		parent_node = item_piles
 			
 	parent_node.add_child(world_object)
 	#print("Object placed: " + world_object.data.name)
@@ -132,6 +147,16 @@ func remove_resource_pile(coordinate:Vector2i) -> bool:
 		return false
 	
 	var pile_to_remove:ResourcePile = resource_pile_occupancy_dict[coordinate]
+	remove_world_object_occupancy(pile_to_remove)
+	pile_to_remove.queue_free()
+	return true
+	
+func remove_item_pile(coordinate:Vector2i) -> bool:
+	if not coordinate in item_pile_occupancy_dict or item_pile_occupancy_dict[coordinate] == null:
+		print("no item pile to remove")
+		return false
+	
+	var pile_to_remove:ItemPile = item_pile_occupancy_dict[coordinate]
 	remove_world_object_occupancy(pile_to_remove)
 	pile_to_remove.queue_free()
 	return true
@@ -163,6 +188,8 @@ func add_world_object_occupancy(world_object:WorldObject) -> void:
 		occupancy_dict = building_occupancy_dict
 	elif world_object is ResourcePile:
 		occupancy_dict = resource_pile_occupancy_dict
+	elif world_object is ItemPile:
+		occupancy_dict = item_pile_occupancy_dict
 		
 	var coordinate := world_object.coordinate
 	for position in world_object.data.occupancy:
@@ -177,6 +204,8 @@ func remove_world_object_occupancy(world_object:WorldObject) -> void:
 		occupancy_dict = building_occupancy_dict
 	elif world_object is ResourcePile:
 		occupancy_dict = resource_pile_occupancy_dict
+	elif world_object is ItemPile:
+		occupancy_dict = item_pile_occupancy_dict
 	var coordinate := world_object.coordinate
 	for position in world_object.data.occupancy:
 		for i in range(world_object.orientation):
@@ -204,32 +233,3 @@ func add_worker(position:Vector2i) -> void:
 	
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	emit_signal("world_map_cell_clicked", event, position)
-
-func plot_course(start:Vector2i,end:Vector2i) -> Array[Vector2i]:
-	# floodfill
-	if start == end:
-		return []
-	
-	var frontier_queue:Array[Vector2i] = [end]
-	var next_tile_to_goal:Dictionary = {}
-	
-	while not start in next_tile_to_goal.keys():
-		if len(frontier_queue) == 0: # target unreachable
-			return []
-		var current_position = frontier_queue.pop_front()
-		for direction in HEX_DIRECTIONS:
-			var next_position:Vector2i = current_position + direction
-			if world_map.get_cell_tile_data(next_position).terrain_set != 1:
-				continue # impassable
-			if next_position in next_tile_to_goal.keys():
-				continue # already visited
-			frontier_queue.append(next_position)
-			next_tile_to_goal[next_position] = current_position
-		
-	var course:Array[Vector2i] = [start]
-		
-	while course[-1] != end:
-		course.append(next_tile_to_goal[course[-1]])
-	
-	course.pop_front() # worker is already at this position and doesn't need to move there
-	return course

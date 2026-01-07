@@ -33,8 +33,12 @@ render_range = 100
 
 [node name="Buildings" type="Node" parent="."]
 
+[node name="ItemPiles" type="Node" parent="."]
+
 [node name="Workers" type="Node" parent="."]
 script = ExtResource("4_74fly")
+
+[node name="FreeWorkers" type="Node" parent="Workers"]
 
 [node name="DragPreview" parent="." instance=ExtResource("6_74fly")]
 

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ObjectAction" load_steps=4 format=3 uid="uid://c6t52w32nub6m"]
+
+[ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="1_48a18"]
+[ext_resource type="Texture2D" uid="uid://bskufxhcgh2uq" path="res://assets/icons.png" id="2_xoo8b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqf4t"]
+atlas = ExtResource("2_xoo8b")
+region = Rect2(238.70012, 0, 114.40004, 117.20009)
+
+[resource]
+script = ExtResource("1_48a18")
+info_text = "[[contained_resource]]: [[current_contained_amount]]/[[contained_amount]]"
+action_text = "Extract"
+texture = SubResource("AtlasTexture_dqf4t")
+metadata/_custom_type_script = "uid://cae2ue4772304"

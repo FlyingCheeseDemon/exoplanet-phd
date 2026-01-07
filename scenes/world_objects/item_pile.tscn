@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0bfnucmycmik"]
+
+[ext_resource type="Script" uid="uid://8jjenpfaqwv5" path="res://scenes/world_objects/item_pile.gd" id="1_ybgr7"]
+
+[node name="ItemPile" type="Sprite2D"]
+script = ExtResource("1_ybgr7")

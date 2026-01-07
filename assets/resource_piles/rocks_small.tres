@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="1_0r06s"]
 [ext_resource type="Script" uid="uid://cglmt5sttmtic" path="res://scripts/ressource_pile_data.gd" id="1_ckcga"]
-[ext_resource type="Resource" uid="uid://c6t52w32nub6m" path="res://assets/resource_piles/collect.tres" id="2_uvv2s"]
+[ext_resource type="Resource" uid="uid://c6t52w32nub6m" path="res://assets/tasks/extract.tres" id="2_uvv2s"]
 [ext_resource type="Texture2D" uid="uid://bskufxhcgh2uq" path="res://assets/icons.png" id="2_v1cy8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0r06s"]
@@ -12,7 +12,7 @@ region = Rect2(9.754272, 10.1588745, 88.446594, 79.8873)
 [resource]
 script = ExtResource("1_ckcga")
 contained_resource = 1
-contained_amount = 20
+contained_amount = 3
 color_tag = 2
 name = "Small rock pile"
 info = "I'm a small pile of rocks"
