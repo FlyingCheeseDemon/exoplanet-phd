@@ -3,7 +3,8 @@ extends Node
 @onready var world:CanvasLayer = $World
 @onready var drag_preview:Control = world.drag_preview
 @onready var obj_content_window:CanvasLayer = $ObjectContentWindow
-@onready var task_queue:CanvasLayer = $TaskQueue
+@onready var task_queue_manager:CanvasLayer = $TaskQueue
+@onready var task_queue = task_queue_manager.task_queue
 
 func _ready() -> void:
 	world.connect("world_map_cell_clicked",_on_world_map_cell_clicked)
@@ -20,7 +21,7 @@ func _process(delta: float) -> void:
 	# if there are tasks and there are free workers: assign task to the next worker
 	for task:Task in task_queue.get_children():
 		if task.completed == true:
-			task.queue_free()
+			task_queue_manager.remove_task(task)
 	if task_queue.get_child_count() > 0 and world.workers.free_workers.get_child_count() > 0 and not task_queue.get_child(-1).being_worked_on:
 		var i:int = 0
 		while task_queue.get_child(i).being_worked_on:
@@ -32,7 +33,7 @@ func _process(delta: float) -> void:
 		task.being_worked_on = true
 
 func _on_task_added(task:Task) -> void:
-	task_queue.add_child(task)
+	task_queue_manager.add_task(task)
 
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT:

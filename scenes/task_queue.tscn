@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://76lm73fncatf"]
+
+[ext_resource type="Script" uid="uid://bhglx2fxugmy6" path="res://scenes/task_queue.gd" id="1_enfrr"]
+
+[node name="TaskQueue" type="CanvasLayer"]
+script = ExtResource("1_enfrr")
+
+[node name="Control" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 101.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 2
+
+[node name="Tasks" type="Node" parent="."]
