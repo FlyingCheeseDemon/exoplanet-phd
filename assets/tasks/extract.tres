@@ -5,11 +5,11 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqf4t"]
 atlas = ExtResource("2_xoo8b")
-region = Rect2(238.70012, 0, 114.40004, 117.20009)
+region = Rect2(239.70648, 14.07962, 81.42676, 82.69905)
 
 [resource]
 script = ExtResource("1_48a18")
-info_text = "[[contained_resource]]: [[current_contained_amount]]/[[contained_amount]]"
+info_text = "[[contained_resource_name]]: [[current_contained_amount]]/[[data.contained_amount]]"
 action_text = "Extract"
 texture = SubResource("AtlasTexture_dqf4t")
 metadata/_custom_type_script = "uid://cae2ue4772304"

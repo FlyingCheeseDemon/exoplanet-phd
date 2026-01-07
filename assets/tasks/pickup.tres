@@ -5,11 +5,11 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tanwi"]
 atlas = ExtResource("2_p1mlp")
-region = Rect2(372.35413, 2.3026485, 108.974976, 113.92112)
+region = Rect2(339.9007, 14.483099, 76.75818, 79.912636)
 
 [resource]
 script = ExtResource("2_tanwi")
-info_text = "[[contained_resource]]: [[current_contained_amount]]/[[contained_amount]]"
+info_text = "[[content]]"
 action_text = "Pick up"
 texture = SubResource("AtlasTexture_tanwi")
 action = 1

@@ -3,7 +3,7 @@ extends Node
 @onready var world:CanvasLayer = $World
 @onready var drag_preview:Control = world.drag_preview
 @onready var obj_content_window:CanvasLayer = $ObjectContentWindow
-@onready var task_queue:Node = $TaskQueue
+@onready var task_queue:CanvasLayer = $TaskQueue
 
 func _ready() -> void:
 	world.connect("world_map_cell_clicked",_on_world_map_cell_clicked)
@@ -30,13 +30,9 @@ func _process(delta: float) -> void:
 		worker.queued_movement = world.world_map.plot_course(worker.coordinate,task.object.coordinate)
 		worker.current_task = task
 		task.being_worked_on = true
-		print("Task assigned to worker")
-		
-	pass
 
 func _on_task_added(task:Task) -> void:
 	task_queue.add_child(task)
-	print(task_queue.get_child_count())
 
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT:

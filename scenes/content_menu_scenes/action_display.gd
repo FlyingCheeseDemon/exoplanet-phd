@@ -2,6 +2,7 @@ extends VBoxContainer
 
 class_name ActionDisplay
 const self_scene:PackedScene = preload("res://scenes/content_menu_scenes/action_display.tscn")
+const RESOURCE_ENUM = preload("res://assets/resources/resources.gd")
 
 signal action_button_pressed
 
@@ -19,10 +20,38 @@ static func constructor(associated_action:ObjectAction,associated_object:WorldOb
 	return obj
 
 func _ready() -> void:
-	info_label.text = action.info_text
+	info_label.text = _format_action_text()
 	action_button.text = action.action_text
 	action_texture.texture = action.texture
 	
+func _process(delta: float) -> void:
+	if visible:
+		info_label.text = _format_action_text()
+ 
+func _format_action_text() -> String:
+	if world_object == null:
+		return ""
+	var regex := RegEx.new()
+	regex.compile("\\[\\[(?<placeholder>[^\\[\\]]+)\\]\\]")
+	var output = action.info_text
+	while output.contains("[["):
+		var matches = regex.search(output)
+		var value = world_object
+		#value = get(matches.strings[1])
+		var list_of_attributes:PackedStringArray = matches.strings[1].split(".")
+		for attr:String in list_of_attributes:
+			value = value.get(attr)
+		
+		if value is Dictionary: # this will always be an RESOURCE: amount kind of deal
+			var outputstr = ""
+			for key in value.keys():
+				outputstr += RESOURCE_ENUM.RESOURCE_TYPES.keys()[key].to_pascal_case()
+				outputstr += ": "
+				outputstr += str(value[key])
+				outputstr += "\n"
+			value = outputstr.erase(len(outputstr)-1,1)
+		output = output.replace(matches.strings[0],str(value))
+	return output
 
 func _on_button_button_down() -> void:
 	var needed_ressource_amount = 0 #TODO handle stuff needing ressources and adding the extra tasks to collect them

@@ -31,8 +31,7 @@ func _ready() -> void:
 		worker.connect("worker_moved",_on_worker_moved)
 	
 	if randomize_colors:
-		land_color = Color.from_hsv(randf(),randf_range(0.3,0.8),randf_range(0.7,1))
-		water_color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
+		randomize_world_colors()
 	recolor_world(water_color,land_color)
 	color_tag_array = [Color(),water_color,land_color]
 
@@ -168,6 +167,10 @@ func get_objects_at_location(position:Vector2i) -> Array[WorldObject]:
 		if position in current_dict and current_dict[position] != null:
 			objects.append(current_dict[position])
 	return objects
+
+func randomize_world_colors() -> void:
+	land_color = Color.from_hsv(randf(),randf_range(0.3,0.8),randf_range(0.7,1))
+	water_color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
 
 func recolor_world(w_color:Color,l_color:Color) -> void:
 	var tiles_colored:Array[bool] = [false,false,false]
