@@ -2,7 +2,6 @@ extends VBoxContainer
 
 class_name ActionDisplay
 const self_scene:PackedScene = preload("res://scenes/content_menu_scenes/action_display.tscn")
-const RESOURCE_ENUM = preload("res://assets/resources/resources.gd")
 
 signal action_button_pressed
 
@@ -47,7 +46,7 @@ func _format_action_text() -> String:
 			var outputstr = ""
 			for key in value.keys():
 				if value[key] > 0:
-					outputstr += RESOURCE_ENUM.RESOURCE_TYPES.keys()[key].to_pascal_case()
+					outputstr += MyEnums.RESOURCE_TYPES.keys()[key].to_pascal_case()
 					outputstr += ": "
 					outputstr += str(value[key])
 					outputstr += "\n"

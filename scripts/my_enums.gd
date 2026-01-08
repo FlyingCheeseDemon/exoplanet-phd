@@ -1,0 +1,25 @@
+extends Node
+
+class_name MyEnums
+
+enum RESOURCE_TYPES {
+	SOIL,
+	STONE,
+	WATER,
+	SCIENCE,
+	GAS
+}
+
+enum ACTIONS {
+	NONE,
+	EXTRACT,
+	PICKUP,
+	DROPOFF,
+	BUILD
+}
+
+enum OBJECT_TYPES {
+	BUILDING,
+	RESOURCE_PILE,
+	ITEM_PILE
+}

@@ -60,15 +60,15 @@ var resource_pile_occupancy_dict:Dictionary = {} # used as a hashed list for all
 var item_pile_occupancy_dict:Dictionary = {}
 
 var type_occupancy_dict_dict:Dictionary = {
-	Building: building_occupancy_dict,
-	ResourcePile: resource_pile_occupancy_dict,
-	ItemPile: item_pile_occupancy_dict
+	MyEnums.OBJECT_TYPES.BUILDING: building_occupancy_dict,
+	MyEnums.OBJECT_TYPES.RESOURCE_PILE: resource_pile_occupancy_dict,
+	MyEnums.OBJECT_TYPES.ITEM_PILE: item_pile_occupancy_dict
 }
 
-var type_root_node_dict:Dictionary = {
-	Building: buildings,
-	ResourcePile: resource_piles,
-	ItemPile: item_piles
+@onready var type_root_node_dict:Dictionary = {
+	MyEnums.OBJECT_TYPES.BUILDING: buildings,
+	MyEnums.OBJECT_TYPES.RESOURCE_PILE: resource_piles,
+	MyEnums.OBJECT_TYPES.ITEM_PILE: item_piles
 }
 
 func place_world_object_at_random(world_object:WorldObject):
@@ -81,17 +81,7 @@ func place_world_object_at_random(world_object:WorldObject):
 
 func check_placement_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
 	# check if object can be placed there
-	var occupancy_dict:Dictionary
-	if world_object is Building:
-		occupancy_dict = building_occupancy_dict
-	elif world_object is ResourcePile:
-		occupancy_dict = resource_pile_occupancy_dict
-	elif world_object is ItemPile:
-		occupancy_dict = item_pile_occupancy_dict
-		
-	else:
-		print("Unknown object type: Error in check_placement_world_object")
-		return false
+	var occupancy_dict:Dictionary = type_occupancy_dict_dict[world_object.type]
 		
 	for position in world_object.data.occupancy: # vectors in godot are value types.
 		# rotate position
@@ -115,21 +105,25 @@ func add_world_object(world_object:WorldObject, coordinate:Vector2i) -> bool:
 	world_object.coordinate = coordinate
 	add_world_object_occupancy(world_object)
 	update_world_object_position(world_object)
-	var parent_node:Node
-	if world_object is Building:
-		parent_node = buildings
-	elif world_object is ResourcePile:
-		parent_node = resource_piles
+	var parent_node:Node = type_root_node_dict[world_object.type]
+	if world_object is ResourcePile:
 		if world_object.data.color_tag != 0:
 			world_object.modulation_color = color_tag_array[world_object.data.color_tag]
 			world_object.modulated = true
-	elif world_object is ItemPile:
-		parent_node = item_piles
-			
+	
+	world_object.connect("i_died",remove_world_object)
 	parent_node.add_child(world_object)
 	#print("Object placed: " + world_object.data.name)
 	return true
 
+func remove_world_object(world_object:WorldObject) -> void:
+	if world_object is Building:
+		remove_building(world_object.coordinate)
+	elif world_object is ResourcePile:
+		remove_resource_pile(world_object.coordinate)
+	elif world_object is ItemPile:
+		remove_item_pile(world_object.coordinate)
+		
 func remove_building(coordinate:Vector2i) -> bool:
 	if not coordinate in building_occupancy_dict or building_occupancy_dict[coordinate] == null:
 		print("no building to remove")
@@ -186,13 +180,7 @@ func recolor_world(w_color:Color,l_color:Color) -> void:
 				return
 
 func add_world_object_occupancy(world_object:WorldObject) -> void:
-	var occupancy_dict:Dictionary
-	if world_object is Building:
-		occupancy_dict = building_occupancy_dict
-	elif world_object is ResourcePile:
-		occupancy_dict = resource_pile_occupancy_dict
-	elif world_object is ItemPile:
-		occupancy_dict = item_pile_occupancy_dict
+	var occupancy_dict:Dictionary = type_occupancy_dict_dict[world_object.type]
 		
 	var coordinate := world_object.coordinate
 	for position in world_object.data.occupancy:
@@ -202,13 +190,8 @@ func add_world_object_occupancy(world_object:WorldObject) -> void:
 		occupancy_dict[global_coordinate] = world_object
 		
 func remove_world_object_occupancy(world_object:WorldObject) -> void:
-	var occupancy_dict:Dictionary
-	if world_object is Building:
-		occupancy_dict = building_occupancy_dict
-	elif world_object is ResourcePile:
-		occupancy_dict = resource_pile_occupancy_dict
-	elif world_object is ItemPile:
-		occupancy_dict = item_pile_occupancy_dict
+	var occupancy_dict:Dictionary = type_occupancy_dict_dict[world_object.type]
+		
 	var coordinate := world_object.coordinate
 	for position in world_object.data.occupancy:
 		for i in range(world_object.orientation):

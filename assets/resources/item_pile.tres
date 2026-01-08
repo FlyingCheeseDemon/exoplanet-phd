@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WorldObjectData" load_steps=6 format=3 uid="uid://b40bxshdh3wtg"]
 
 [ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="1_hxwfr"]
-[ext_resource type="Script" uid="uid://nccbtaqmds80" path="res://scripts/world_object_data.gd" id="2_51qp0"]
+[ext_resource type="Script" uid="uid://nccbtaqmds80" path="res://scenes/world_objects/world_object_data.gd" id="2_51qp0"]
 [ext_resource type="Resource" uid="uid://b6s6q1twbr2qg" path="res://assets/tasks/pickup.tres" id="2_fu1xm"]
 [ext_resource type="Texture2D" uid="uid://bskufxhcgh2uq" path="res://assets/icons.png" id="4_5w2ar"]
 

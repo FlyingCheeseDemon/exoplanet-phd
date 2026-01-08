@@ -2,8 +2,6 @@ extends Sprite2D
 
 class_name Worker
 const self_scene:PackedScene = preload("res://scenes/worker.tscn")
-const ACTIONS = preload("res://scripts/actions.gd")
-const RESOURCE_ENUM = preload("res://assets/resources/resources.gd")
 
 signal worker_moved
 signal task_started
@@ -61,20 +59,23 @@ func _process(delta: float) -> void:
 ##### ACTIONS HERE
 
 var action_method_dict:Dictionary = {
-	ACTIONS.ACTIONS.EXTRACT: action_extract,
-	ACTIONS.ACTIONS.PICKUP: action_pick_up
+	MyEnums.ACTIONS.EXTRACT: action_extract,
+	MyEnums.ACTIONS.PICKUP: action_pick_up,
+	MyEnums.ACTIONS.NONE: action_,
+	MyEnums.ACTIONS.DROPOFF: action_drop_off
 }
 
-func action(worker:Worker,object:WorldObject,world:World,location:Vector2i) -> bool:
+func action_(worker:Worker,object:WorldObject,world:World,location:Vector2i) -> bool:
 	# the return value states if the task is finished now
 	return true
-	
+
+func action_drop_off(worker:Worker,object:WorldObject,world:World,location:Vector2i) -> bool:
+	# the return value states if the task is finished now
+	return true
+
 func action_extract(worker:Worker,object:ResourcePile,world:World,location:Vector2i) -> bool:
-	if object.current_contained_amount == 0:
-		world.remove_resource_pile(location)
-		return true
-		
-	object.current_contained_amount -= 1
+	
+	#object.current_contained_amount -= 1
 	var item_pile_to_pile_on:ItemPile
 	if location in world.item_pile_occupancy_dict and world.item_pile_occupancy_dict[location] != null:
 		item_pile_to_pile_on = world.item_pile_occupancy_dict[location]
@@ -82,23 +83,11 @@ func action_extract(worker:Worker,object:ResourcePile,world:World,location:Vecto
 		item_pile_to_pile_on = ItemPile.constructor(load("res://assets/resources/item_pile.tres"))
 		world.add_world_object(item_pile_to_pile_on,location)
 	
-	var deposited:bool = false
-	for key in item_pile_to_pile_on.content.keys():
-		if key == object.data.contained_resource:
-			item_pile_to_pile_on.content[key] += 1
-			deposited = true
-			break
+	item_pile_to_pile_on.add_resource(object.content.keys()[0],object.remove_resource(object.content.keys()[0],1))
+
+	print("Extracted 1 " + str(MyEnums.RESOURCE_TYPES.keys()[object.data.contained_resource]) + "!")
 	
-	if not deposited:
-		item_pile_to_pile_on.content[object.data.contained_resource] = 1
-		
-	print("Extracted 1 " + str(RESOURCE_ENUM.RESOURCE_TYPES.keys()[object.data.contained_resource]) + "!")
-	
-	if object.current_contained_amount == 0:
-		world.remove_resource_pile(location)
-		return true
-	
-	return false
+	return object.total_content == 0
 
 func action_pick_up(worker:Worker,object:WorldObject,world:World,location:Vector2i) -> bool:
 	if object == null: # to queue picking up a pile that doesn't yet exist and the moment of task generation
@@ -112,9 +101,9 @@ func action_pick_up(worker:Worker,object:WorldObject,world:World,location:Vector
 				
 	for key in object.content.keys():
 		if key in worker.inventory.keys():
-			worker.inventory[key] += object.content[key]
+			worker.inventory[key] += object.remove_resource(key,-1)
 		else:
-			worker.inventory[key] = object.content[key]
-		print("Worker picked up " + str(object.content[key]) + " " + str(RESOURCE_ENUM.RESOURCE_TYPES.keys()[key]))
-	world.remove_item_pile(location)
+			worker.inventory[key] = object.remove_resource(key,-1)
+		print("Worker picked up " + str(object.content[key]) + " " + str(MyEnums.RESOURCE_TYPES.keys()[key]))
+
 	return true

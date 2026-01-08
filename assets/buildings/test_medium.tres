@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BuildingData" load_steps=6 format=3 uid="uid://cctq7wwo6ekw2"]
 
-[ext_resource type="Script" uid="uid://c6uun5ih5gtla" path="res://scripts/building_data.gd" id="1_a8b4n"]
+[ext_resource type="Script" uid="uid://c6uun5ih5gtla" path="res://scenes/world_objects/building_data.gd" id="1_a8b4n"]
 [ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="1_dxs3a"]
 [ext_resource type="Texture2D" uid="uid://djr1sxaytyx7p" path="res://assets/buildings/building_atlas_0.png" id="2_pykjf"]
 [ext_resource type="Resource" uid="uid://bnafxcm1i12sb" path="res://assets/tasks/contains.tres" id="2_y1464"]

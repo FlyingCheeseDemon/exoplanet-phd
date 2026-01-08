@@ -4,3 +4,4 @@
 
 [node name="ItemPile" type="Sprite2D"]
 script = ExtResource("1_ybgr7")
+coordinate = null

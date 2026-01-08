@@ -1,7 +1,0 @@
-enum ACTIONS {
-	NONE,
-	EXTRACT,
-	PICKUP,
-	DROPOFF,
-	BUILD
-}
