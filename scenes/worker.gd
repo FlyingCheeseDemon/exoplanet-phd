@@ -70,7 +70,9 @@ func action_(worker:Worker,object:WorldObject,world:World,location:Vector2i) -> 
 	return true
 
 func action_drop_off(worker:Worker,object:WorldObject,world:World,location:Vector2i) -> bool:
-	# the return value states if the task is finished now
+	for key in worker.inventory.keys():
+		object.add_resource(key,worker.inventory[key])
+		worker.inventory[key] = 0
 	return true
 
 func action_extract(worker:Worker,object:ResourcePile,world:World,location:Vector2i) -> bool:

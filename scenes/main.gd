@@ -20,7 +20,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# if there are tasks and there are free workers: assign task to the next worker
 	for task:Task in task_queue.get_children():
-		if task.completed == true:
+		if task.completed == true or task.object == null:
 			task_queue_manager.remove_task(task)
 	if task_queue.get_child_count() > 0 and world.workers.free_workers.get_child_count() > 0 and not task_queue.get_child(-1).being_worked_on:
 		var i:int = 0
@@ -28,9 +28,12 @@ func _process(delta: float) -> void:
 			i += 1
 		var worker:Worker = world.workers.free_workers.get_child(0)
 		var task:Task = task_queue.get_child(i)
-		worker.queued_movement = world.world_map.plot_course(worker.coordinate,task.object.coordinate)
-		worker.current_task = task
-		task.being_worked_on = true
+		if task.object == null:
+			task_queue_manager.remove_task(task)
+		else:
+			worker.queued_movement = world.world_map.plot_course(worker.coordinate,task.object.coordinate)
+			worker.current_task = task
+			task.being_worked_on = true
 
 func _on_task_added(task:Task) -> void:
 	task_queue_manager.add_task(task)
