@@ -43,11 +43,8 @@ func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -
 		else:
 			var objects:Array[WorldObject] = world.get_objects_at_location(position)
 			if len(objects) > 0:
-				obj_content_window.display_object(objects[0])
-			#var our_worker:Worker = world.workers.get_child(0)'
-			#var path:Array[Vector2i] = world.plot_course(our_worker.coordinate,position)
-			#our_worker.queued_movement = path
-			#print(world.workers.get_child(0).queued_movement)'
+				obj_content_window.clear_display()
+				for object in objects:
+					obj_content_window.display_object(object)
 	elif event.button_index == MOUSE_BUTTON_RIGHT:
-		#print(world.world_map.hex_len(position))
 		obj_content_window.visible = false

@@ -22,6 +22,7 @@ static func constructor(associated_action:ObjectAction,associated_object:WorldOb
 func _ready() -> void:
 	info_label.text = _format_action_text()
 	action_button.text = action.action_text
+	action_button.visible = action_button.text != ""
 	action_texture.texture = action.texture
 	
 func _process(delta: float) -> void:
@@ -45,12 +46,16 @@ func _format_action_text() -> String:
 		if value is Dictionary: # this will always be an RESOURCE: amount kind of deal
 			var outputstr = ""
 			for key in value.keys():
-				outputstr += RESOURCE_ENUM.RESOURCE_TYPES.keys()[key].to_pascal_case()
-				outputstr += ": "
-				outputstr += str(value[key])
-				outputstr += "\n"
-			value = outputstr.erase(len(outputstr)-1,1)
-		output = output.replace(matches.strings[0],str(value))
+				if value[key] > 0:
+					outputstr += RESOURCE_ENUM.RESOURCE_TYPES.keys()[key].to_pascal_case()
+					outputstr += ": "
+					outputstr += str(value[key])
+					outputstr += "\n"
+			if len(outputstr) > 0:
+				outputstr = outputstr.erase(len(outputstr)-1,1)
+			output = output.replace(matches.strings[0],outputstr)
+		else:
+			output = output.replace(matches.strings[0],str(value))
 	return output
 
 func _on_button_button_down() -> void:

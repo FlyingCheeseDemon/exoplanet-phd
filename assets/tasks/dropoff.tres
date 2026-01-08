@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="ObjectAction" load_steps=3 format=3 uid="uid://dejuwm4wm1obj"]
+[gd_resource type="Resource" script_class="ObjectAction" load_steps=2 format=3 uid="uid://dejuwm4wm1obj"]
 
-[ext_resource type="Script" uid="uid://ndreboypniik" path="res://scripts/item_bundle.gd" id="1_bg4ji"]
 [ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="2_pxro0"]
 
 [resource]
 script = ExtResource("2_pxro0")
 action_text = "Drop off"
-action = 2
+action = 3
 metadata/_custom_type_script = "uid://cae2ue4772304"

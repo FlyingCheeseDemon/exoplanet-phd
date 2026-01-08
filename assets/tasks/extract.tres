@@ -12,4 +12,5 @@ script = ExtResource("1_48a18")
 info_text = "[[contained_resource_name]]: [[current_contained_amount]]/[[data.contained_amount]]"
 action_text = "Extract"
 texture = SubResource("AtlasTexture_dqf4t")
+action = 1
 metadata/_custom_type_script = "uid://cae2ue4772304"
