@@ -10,4 +10,4 @@ class_name ObjectAction
 @export var required_resources:Array[MyEnums.RESOURCE_TYPES]
 @export var required_resources_amounts:Array[int]
 
-@export var action:MyEnums.ACTIONS
+@export var actions:Array[MyEnums.ACTIONS]

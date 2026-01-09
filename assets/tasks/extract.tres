@@ -12,5 +12,5 @@ script = ExtResource("1_48a18")
 info_text = "[[content]]"
 action_text = "Extract"
 texture = SubResource("AtlasTexture_dqf4t")
-action = 1
+actions = Array[int]([1, 2, 3])
 metadata/_custom_type_script = "uid://cae2ue4772304"

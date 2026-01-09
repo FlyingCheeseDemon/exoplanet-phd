@@ -12,5 +12,5 @@ script = ExtResource("2_tanwi")
 info_text = "[[content]]"
 action_text = "Pick up"
 texture = SubResource("AtlasTexture_tanwi")
-action = 2
+actions = Array[int]([2])
 metadata/_custom_type_script = "uid://cae2ue4772304"

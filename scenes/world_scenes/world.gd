@@ -208,7 +208,7 @@ func _on_worker_moved(worker:Worker) -> void:
 	var world_position:Vector2 = world_map.map_to_local(worker.coordinate)
 	worker.position = world_position
 	
-func add_worker(position:Vector2i) -> void:
+func add_worker(position:Vector2i) -> Worker:
 	var new_worker = Worker.constructor(position)
 	workers.add_child(new_worker)
 	new_worker.connect("worker_moved",_on_worker_moved)
@@ -216,6 +216,22 @@ func add_worker(position:Vector2i) -> void:
 	new_worker.connect("task_ended",workers._on_task_ended)
 	new_worker.task_ended.emit(new_worker)
 	_on_worker_moved(new_worker)
-	
+	return new_worker
+
+func get_closest_building_x(position:Vector2i,identifyer:BuildingData.BUILDING_TYPE) -> Vector2i:
+	var closest:Building = null
+	var smallest_distance:int = 99999
+	for building in buildings.get_children():
+		if building.data.type != identifyer:
+			continue
+		var distance:int = len(world_map.plot_course(position,building.coordinate))
+		if distance < smallest_distance:
+			smallest_distance = distance
+			closest = building
+	if closest == null:
+		return position
+	else:
+		return closest.coordinate
+
 func _on_world_map_cell_clicked(event:InputEventMouseButton,position:Vector2i) -> void:
 	emit_signal("world_map_cell_clicked", event, position)

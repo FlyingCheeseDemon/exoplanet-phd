@@ -46,7 +46,15 @@ func remove_resource(res:MyEnums.RESOURCE_TYPES,amount:int) -> int:
 		content[res] -= amount
 		_on_content_changed()
 		return amount
-	
+
+func check_content_for_stuff(stuff:Dictionary) -> bool:
+	for key in stuff:
+		if not key in content.keys():
+			return false
+		if content[key] < stuff[key]:
+			return false
+	return true
+
 func _on_content_changed() -> void:
 	pass
 	

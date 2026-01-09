@@ -35,5 +35,5 @@ func update_display() -> void:
 		action_display.connect("action_button_pressed",_on_action_button_pressed)
 	visible = true
 
-func _on_action_button_pressed(task:Task) -> void:
+func _on_action_button_pressed(task:ComplexTask) -> void:
 	task_added.emit(task)

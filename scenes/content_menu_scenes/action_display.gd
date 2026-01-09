@@ -24,7 +24,7 @@ func _ready() -> void:
 	action_button.visible = action_button.text != ""
 	action_texture.texture = action.texture
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if visible:
 		info_label.text = _format_action_text()
  
@@ -59,5 +59,5 @@ func _format_action_text() -> String:
 
 func _on_button_button_down() -> void:
 	var needed_ressource_amount = 0 #TODO handle stuff needing ressources and adding the extra tasks to collect them
-	var task:Task = Task.constructor(world_object,action)
-	action_button_pressed.emit(task)
+	var complex_task:ComplexTask = ComplexTask.constructor(world_object,action)
+	action_button_pressed.emit(complex_task)

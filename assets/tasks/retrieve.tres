@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ObjectAction" load_steps=2 format=3 uid="uid://f211hnt5lkbm"]
+
+[ext_resource type="Script" uid="uid://cae2ue4772304" path="res://scripts/object_action.gd" id="1_dxx48"]
+
+[resource]
+script = ExtResource("1_dxx48")
+info_text = "Bring ressources:
+[[content]]
+to the nearest storage"
+action_text = "Retrieve"
+actions = Array[int]([2, 3])
+metadata/_custom_type_script = "uid://cae2ue4772304"

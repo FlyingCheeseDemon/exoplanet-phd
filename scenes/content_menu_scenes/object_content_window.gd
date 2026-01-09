@@ -20,5 +20,5 @@ func display_object(world_object:WorldObject) -> void:
 	page.update_display()
 	visible = true
 
-func _on_task_added(task:Task) -> void:
+func _on_task_added(task:ComplexTask) -> void:
 	task_added.emit(task)

@@ -5,7 +5,7 @@ extends CanvasLayer
 
 var texture_rect_index:Dictionary = {}
 
-func add_task(task:Task) -> void:
+func add_task(task:ComplexTask) -> void:
 	task_queue.add_child(task)
 	var task_icon = TextureRect.new()
 	task_icon.texture = task.action.texture
@@ -13,6 +13,8 @@ func add_task(task:Task) -> void:
 	action_queue_display.add_child(task_icon)
 	texture_rect_index[task] = task_icon
 
-func remove_task(task:Task) -> void:
+func remove_task(task:ComplexTask) -> void:
+	print("in task_queue")
 	texture_rect_index[task].queue_free()
+	task.worker.current_task = null
 	task.queue_free()

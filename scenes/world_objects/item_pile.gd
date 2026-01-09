@@ -3,9 +3,9 @@ extends WorldObject
 class_name ItemPile
 const self_scene:PackedScene = preload("res://scenes/world_objects/item_pile.tscn")
 
-static func constructor(dat:WorldObjectData) -> ItemPile:
+static func constructor() -> ItemPile:
 	var obj := self_scene.instantiate()
-	obj.data = dat
+	obj.data = load("res://assets/resources/item_pile.tres")
 	obj.type = MyEnums.OBJECT_TYPES.ITEM_PILE
 	return obj
 

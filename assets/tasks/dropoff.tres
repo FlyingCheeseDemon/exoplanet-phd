@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("2_pxro0")
 action_text = "Drop off"
-action = 3
+actions = Array[int]([3])
 metadata/_custom_type_script = "uid://cae2ue4772304"

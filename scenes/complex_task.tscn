@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbtyu6xcab6gj"]
+
+[ext_resource type="Script" uid="uid://0twp5356tlhs" path="res://scenes/complex_task.gd" id="1_wwv11"]
+
+[node name="ComplexTask" type="Node"]
+script = ExtResource("1_wwv11")
