@@ -110,6 +110,9 @@ func action_drop_off(shopping_list:Dictionary) -> bool:
 		return true
 	var object:Building = world.type_occupancy_dict_dict[action_type][coordinate]
 
+	if len(shopping_list.keys()) == 0:
+		shopping_list = inventory # drop all
+		
 	for key in shopping_list:
 		if inventory[key] > shopping_list[key]:
 			object.add_resource(key,shopping_list[key])

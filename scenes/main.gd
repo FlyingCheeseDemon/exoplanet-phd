@@ -43,7 +43,6 @@ func answer_worker_routing_request(worker:Worker,destination:Vector2i):
 	worker.queued_movement = plotted_path
 
 func _on_worker_task_completed(worker:Worker) -> void:
-	print("in main")
 	task_queue_manager.remove_task(worker.current_task)
 
 func _on_task_added(task:ComplexTask) -> void:
