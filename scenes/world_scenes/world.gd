@@ -3,6 +3,7 @@ extends CanvasLayer
 class_name World
 
 @onready var world_map:TileMapLayer = $WorldMap
+@onready var visual_world_map:Node2D = $VisualMap
 @onready var camera:Camera2D = $Camera2D
 @onready var buildings:Node = $Buildings
 @onready var resource_piles:Node = $ResourcePiles
@@ -34,6 +35,8 @@ func _ready() -> void:
 		randomize_world_colors()
 	recolor_world(water_color,land_color)
 	color_tag_array = [Color(),water_color,land_color]
+	visual_world_map.after_world_map_update(world_map)
+	
 
 var pan_speed:float = 10
 
@@ -167,17 +170,8 @@ func randomize_world_colors() -> void:
 	water_color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
 
 func recolor_world(w_color:Color,l_color:Color) -> void:
-	var tiles_colored:Array[bool] = [false,false,false]
-	for i in range(-100,100):
-		for j in range(-100,100):
-			if world_map.get_cell_tile_data(Vector2i(i,j)).terrain_set == 0:
-				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = w_color
-			else:
-				world_map.get_cell_tile_data(Vector2i(i,j)).modulate = l_color
-				
-			tiles_colored[world_map.get_cell_tile_data(Vector2i(i,j)).terrain_set] = true
-			if tiles_colored[0] and tiles_colored[1] and tiles_colored[2]:
-				return
+	visual_world_map.material.set_shader_parameter("water_color",w_color);
+	visual_world_map.material.set_shader_parameter("land_color",l_color);
 
 func add_world_object_occupancy(world_object:WorldObject) -> void:
 	var occupancy_dict:Dictionary = type_occupancy_dict_dict[world_object.type]

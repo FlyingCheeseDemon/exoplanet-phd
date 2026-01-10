@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://obliyal6gvul"]
+
+[ext_resource type="Texture2D" uid="uid://5uobv2mbjmcv" path="res://assets/dual_tilemaps/test_tilemap.png" id="1_yjuhm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mackf"]
+resource_local_to_scene = true
+atlas = ExtResource("1_yjuhm")
+region = Rect2(610.33954, 11.561863, 203.77509, 175.5514)
+
+[sub_resource type="GDScript" id="GDScript_7eij3"]
+script/source = "extends Sprite2D
+
+class_name DualTile
+const self_scene:PackedScene = preload(\"res://scenes/world_scenes/dual_tile.tscn\")
+
+enum CORNER {NO,YES}
+
+@export var margins:Vector2i = Vector2i(12,12)
+@export var texture_region_size:Vector2i = Vector2i(200,174)
+@export var row_probabilities:Array[float]
+var parity:bool
+
+static func constructor() -> DualTile:
+	var obj := self_scene.instantiate()
+	return obj
+
+var orientation:int:
+	set = set_orientation
+	
+func set_orientation(orient:int) -> void:
+	rotation = orient * 2*PI/3
+
+func set_geometry(one:CORNER,two:CORNER,three:CORNER) -> void:
+	pass
+	
+func update_texture(coverage:int) -> void:
+	var row:int = 0
+	texture.region = Rect2(Vector2i(margins.x+coverage*texture_region_size.x,margins.y+row*texture_region_size.y), texture_region_size)
+"
+
+[node name="DualTile" type="Sprite2D"]
+texture = SubResource("AtlasTexture_mackf")
+script = SubResource("GDScript_7eij3")

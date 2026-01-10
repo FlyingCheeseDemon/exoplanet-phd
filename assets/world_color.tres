@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://lhccucjt1x6j"]
+
+[ext_resource type="Shader" uid="uid://bf64q54j2ohdt" path="res://assets/world_color.gdshader" id="1_ajc76"]
+
+[resource]
+shader = ExtResource("1_ajc76")
+shader_parameter/water_color = Vector4(0.54, 0.655, 0.5, 1)
+shader_parameter/land_color = Vector4(0.3, 0.72, 0.9, 1)
