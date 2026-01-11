@@ -20,14 +20,23 @@ image_size = np.array([174,200])
 new_image = np.zeros_like(image)
 
 for angle in range(6):
-    for j in range(1):
+    for j in range(3):
         for i in range(11):
             offset = np.array([j,i])
             image_start = margin+offset*image_size
             subimage = image[image_start[0]:image_start[0]+image_size[0],image_start[1]:image_start[1]+image_size[1]]
             subimage = rotate_image(subimage,angle*60)
+            for a in range(len(subimage)):
+                row = subimage[a]
+                for b in range(len(row)):
+                    pixel = row[b]
+                    if subimage[a][b][1] > 0:
+                        pass
+                    if pixel[3] < 255:
+                        subimage[a][b][3] = 0
+                        
             new_image[image_start[0]:image_start[0]+image_size[0],image_start[1]:image_start[1]+image_size[1]] = subimage
             
-    plt.imshow(new_image)
-    plt.show()
+    # plt.imshow(new_image)
+    # plt.show()
     cv2.imwrite(base_path + atlas_name + f"{angle}.png",new_image)

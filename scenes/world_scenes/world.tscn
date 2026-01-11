@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://b3ou4tybdq6r"]
+[gd_scene load_steps=24 format=4 uid="uid://b3ou4tybdq6r"]
 
 [ext_resource type="Script" uid="uid://cdk0qox14sueo" path="res://scenes/world_scenes/world.gd" id="1_4wyf3"]
 [ext_resource type="TileSet" uid="uid://wq2fpuh0mids" path="res://assets/world_tileset.tres" id="2_ikkem"]
@@ -14,67 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://ctqfeq8elprdu" path="res://assets/dual_tilemaps/test_tilemap5.png" id="9_4ju7g"]
 [ext_resource type="Texture2D" uid="uid://wj2ld40an43n" path="res://assets/dual_tilemaps/test_tilemap1.png" id="10_mg8tk"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jyr2a"]
-noise_type = 0
-frequency = 0.0582
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k3ge2"]
+frequency = 0.0466
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfi5g"]
-texture = ExtResource("5_k3ge2")
-margins = Vector2i(12, 12)
-texture_region_size = Vector2i(200, 174)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
-10:0/next_alternative_id = 2
-10:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_72adn"]
-texture = ExtResource("6_3q655")
-margins = Vector2i(12, 12)
-texture_region_size = Vector2i(200, 174)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
-10:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f5xb7"]
-texture = ExtResource("7_g6vb1")
-margins = Vector2i(12, 12)
-texture_region_size = Vector2i(200, 174)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
-10:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_bxv4k"]
-tile_shape = 3
-tile_layout = 4
-tile_offset_axis = 1
-tile_size = Vector2i(200, 174)
-sources/0 = SubResource("TileSetAtlasSource_bfi5g")
-sources/1 = SubResource("TileSetAtlasSource_72adn")
-sources/2 = SubResource("TileSetAtlasSource_f5xb7")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3q655"]
+frequency = 0.036
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3q655"]
 texture = ExtResource("9_4ju7g")
@@ -102,6 +46,17 @@ texture_region_size = Vector2i(200, 174)
 8:1/0 = 0
 9:1/0 = 0
 10:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4f85e"]
 texture = ExtResource("10_mg8tk")
@@ -129,6 +84,17 @@ texture_region_size = Vector2i(200, 174)
 8:1/0 = 0
 9:1/0 = 0
 10:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k3ge2"]
 texture = ExtResource("8_fu00p")
@@ -145,6 +111,28 @@ texture_region_size = Vector2i(200, 174)
 8:0/0 = 0
 9:0/0 = 0
 10:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_tkitp"]
 tile_shape = 3
@@ -154,6 +142,130 @@ tile_size = Vector2i(200, 174)
 sources/0 = SubResource("TileSetAtlasSource_3q655")
 sources/2 = SubResource("TileSetAtlasSource_k3ge2")
 sources/1 = SubResource("TileSetAtlasSource_4f85e")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfi5g"]
+texture = ExtResource("5_k3ge2")
+margins = Vector2i(12, 12)
+texture_region_size = Vector2i(200, 174)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/next_alternative_id = 2
+10:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_72adn"]
+texture = ExtResource("6_3q655")
+margins = Vector2i(12, 12)
+texture_region_size = Vector2i(200, 174)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f5xb7"]
+texture = ExtResource("7_g6vb1")
+margins = Vector2i(12, 12)
+texture_region_size = Vector2i(200, 174)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bxv4k"]
+tile_shape = 3
+tile_layout = 4
+tile_offset_axis = 1
+tile_size = Vector2i(200, 174)
+sources/0 = SubResource("TileSetAtlasSource_bfi5g")
+sources/1 = SubResource("TileSetAtlasSource_72adn")
+sources/2 = SubResource("TileSetAtlasSource_f5xb7")
 
 [node name="World" type="CanvasLayer"]
 follow_viewport_enabled = true
@@ -168,8 +280,9 @@ zoom = Vector2(0.18, 0.18)
 tile_map_data = PackedByteArray("AAD9/wAAAAABAAAAAAD+/wAAAAABAAAAAAD/////AAABAAAAAAABAP7/AAABAAAAAAACAP7/AAABAAAAAAABAP//AAABAAAAAAAAAAAAAAABAAAAAAD//wAAAAABAAAAAAD+////AAABAAAAAAD///7/AAABAAAAAAABAAAAAAABAAAAAAAAAAEAAAABAAAAAAD//wEAAAABAAAAAAD+/wEAAAABAAAAAAAAAP//AAABAAAAAAAAAP7/AAABAAAAAAD9//7/AAABAAAAAAD+//7/AAABAAAAAAD+//3/AAABAAAAAAD///3/AAABAAAAAAAAAP3/AAACAAAAAAD8////AAABAAAAAAD8/wAAAAABAAAAAAD9////AAABAAAAAAD8/wEAAAAAAAAAAAD9/wEAAAABAAAAAAD7/wAAAAABAAAAAAACAAAAAAABAAAAAAD7////AAABAAAAAAD7//7/AAABAAAAAAD8//7/AAABAAAAAAD9//3/AAABAAAAAAD///z/AAABAAAAAAABAP3/AAACAAAAAAD8//3/AAABAAAAAAACAP3/AAABAAAAAAADAP3/AAABAAAAAAAEAP7/AAAAAAAAAAAEAP//AAAAAAAAAAAEAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAADAAEAAAABAAAAAAACAAEAAAABAAAAAAABAAEAAAABAAAAAAD9//z/AAABAAAAAAD+//z/AAABAAAAAAAAAPz/AAACAAAAAAABAPz/AAACAAAAAAADAP7/AAABAAAAAAADAP//AAAAAAAAAAADAAAAAAAAAAAAAAACAP//AAABAAAAAAAAAAIAAAABAAAAAAD//wIAAAABAAAAAAD+/wIAAAABAAAAAAACAAIAAAABAAAAAAABAAIAAAABAAAAAAD9/wIAAAAAAAAAAAD8/wIAAAAAAAAAAAAAAAMAAAACAAAAAAD+/wMAAAABAAAAAAADAAIAAAAAAAAAAAACAAMAAAABAAAAAAD//wMAAAABAAAAAAD9/wMAAAAAAAAAAAD7/wMAAAAAAAAAAAD7/wIAAAAAAAAAAAD8/wQAAAABAAAAAAD7/wQAAAAAAAAAAAD6/wQAAAAAAAAAAAD6/wMAAAAAAAAAAAD6/wIAAAAAAAAAAAD7/wEAAAAAAAAAAAD8/wMAAAAAAAAAAAD5/wEAAAAAAAAAAAD5/wAAAAAAAAAAAAD6/wAAAAAAAAAAAAD6/wEAAAAAAAAAAAD5////AAAAAAAAAAD6////AAAAAAAAAAD5//7/AAAAAAAAAAD6//7/AAAAAAAAAAAAAAQAAAACAAAAAAABAAQAAAACAAAAAAAAAAUAAAACAAAAAAABAAMAAAACAAAAAAACAAQAAAACAAAAAAABAAUAAAACAAAAAAD+/wYAAAABAAAAAAD9/wYAAAABAAAAAAD9/wUAAAABAAAAAAD+/wQAAAABAAAAAAD//wQAAAABAAAAAAD+/wUAAAABAAAAAAD//wUAAAABAAAAAAD8/wUAAAABAAAAAAADAPv/AAABAAAAAAAEAPz/AAABAAAAAAAFAPz/AAACAAAAAAAEAP3/AAABAAAAAAADAPz/AAABAAAAAAADAPr/AAABAAAAAAAEAPr/AAABAAAAAAAFAPn/AAABAAAAAAAGAPn/AAABAAAAAAAHAPn/AAABAAAAAAAIAPr/AAABAAAAAAAJAPr/AAABAAAAAAAJAPv/AAACAAAAAAAJAPz/AAACAAAAAAAIAPz/AAACAAAAAAAHAPz/AAACAAAAAAAGAPz/AAACAAAAAAACAPz/AAACAAAAAAABAPv/AAACAAAAAAAAAPv/AAACAAAAAAABAPr/AAABAAAAAAACAPv/AAACAAAAAAAFAPr/AAABAAAAAAAGAPv/AAACAAAAAAD///v/AAABAAAAAAD+//v/AAABAAAAAAD///r/AAABAAAAAAAAAPr/AAABAAAAAAABAPn/AAABAAAAAAACAPr/AAACAAAAAAADAPn/AAABAAAAAAAEAPn/AAABAAAAAAAIAPn/AAABAAAAAAAJAPn/AAABAAAAAAAKAPr/AAABAAAAAAALAPr/AAACAAAAAAAKAPv/AAABAAAAAAAIAPv/AAACAAAAAAAHAPv/AAACAAAAAAAFAPv/AAACAAAAAAAEAPv/AAABAAAAAAAGAPr/AAABAAAAAAAHAPr/AAABAAAAAAD+//r/AAABAAAAAAD9//n/AAAAAAAAAAD+//n/AAAAAAAAAAD///n/AAAAAAAAAAD9//r/AAABAAAAAAD8//v/AAABAAAAAAD8//r/AAABAAAAAAAAAPn/AAAAAAAAAAACAPn/AAABAAAAAAD9//v/AAABAAAAAAD7//r/AAABAAAAAAABAPj/AAAAAAAAAAD8//z/AAABAAAAAAD7//v/AAABAAAAAAD7//z/AAABAAAAAAD6//z/AAABAAAAAAD5//z/AAABAAAAAAD5//v/AAABAAAAAAD6//v/AAABAAAAAAADAAMAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAQAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAIAAAAAAAAAAAD7//j/AAAAAAAAAAD8//n/AAAAAAAAAAD9//j/AAAAAAAAAAD+//j/AAAAAAAAAAD///j/AAAAAAAAAAAAAPj/AAAAAAAAAAD6//n/AAAAAAAAAAD6//j/AAAAAAAAAAD7//f/AAAAAAAAAAD8//j/AAAAAAAAAAD9//f/AAAAAAAAAAD///f/AAAAAAAAAAD8//f/AAAAAAAAAAD+//f/AAAAAAAAAAD7//n/AAAAAAAAAAD5//j/AAAAAAAAAAD6//r/AAAAAAAAAAD5//n/AAAAAAAAAAD4//n/AAABAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAABAAAAAAAFAAAAAAAAAAAAAAAFAP//AAAAAAAAAAAFAP7/AAAAAAAAAAAGAP7/AAAAAAAAAAAHAP7/AAACAAAAAAAHAP//AAABAAAAAAAGAP//AAAAAAAAAAAIAP3/AAACAAAAAAAGAP3/AAACAAAAAAAHAP3/AAACAAAAAAAFAP3/AAAAAAAAAAAJAP3/AAACAAAAAAAIAP7/AAACAAAAAAAKAP3/AAACAAAAAAAHAAAAAAABAAAAAAAHAAEAAAABAAAAAAAIAAEAAAABAAAAAAAIAAAAAAABAAAAAAAJAP//AAABAAAAAAAKAP//AAABAAAAAAAIAP//AAABAAAAAAAJAP7/AAACAAAAAAALAP3/AAACAAAAAAAMAP7/AAACAAAAAAALAP7/AAACAAAAAAAKAPz/AAACAAAAAAALAPz/AAACAAAAAAALAP//AAACAAAAAAAMAP3/AAACAAAAAAAKAP7/AAACAAAAAAANAP3/AAACAAAAAAALAPv/AAACAAAAAAAMAPv/AAACAAAAAAALAPn/AAACAAAAAAAMAPn/AAACAAAAAAAMAPr/AAACAAAAAAALAPj/AAACAAAAAAAKAPn/AAACAAAAAAD3//z/AAACAAAAAAD3//v/AAACAAAAAAD4//z/AAACAAAAAAD4//3/AAACAAAAAAD2//z/AAACAAAAAAD2//7/AAABAAAAAAD3//7/AAABAAAAAAD3////AAABAAAAAAD3//3/AAABAAAAAAD4////AAABAAAAAAD4//7/AAABAAAAAAD5//3/AAABAAAAAAD5//r/AAABAAAAAAD4//v/AAABAAAAAAD4//r/AAABAAAAAAD3//r/AAABAAAAAAD3//n/AAABAAAAAAD2//n/AAABAAAAAAD3//j/AAABAAAAAAD4//j/AAABAAAAAAD3//f/AAABAAAAAAD2//j/AAABAAAAAAAIAAIAAAABAAAAAAAIAAMAAAABAAAAAAAHAAQAAAABAAAAAAAIAAQAAAABAAAAAAAJAAQAAAABAAAAAAAKAAQAAAABAAAAAAALAAMAAAABAAAAAAAKAAMAAAABAAAAAAAJAAMAAAABAAAAAAAJAAIAAAABAAAAAAAHAAMAAAABAAAAAAAJAAEAAAABAAAAAAAHAAIAAAABAAAAAAAKAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAEAAAABAAAAAAAKAAIAAAABAAAAAAD7//3/AAABAAAAAAD6//3/AAABAAAAAAA=")
 tile_set = ExtResource("2_ikkem")
 script = ExtResource("3_2ti7m")
-perlin_noise = SubResource("FastNoiseLite_jyr2a")
-water_threshold = -0.34
+perlin_noise_water = SubResource("FastNoiseLite_k3ge2")
+perlin_noise_mountain = SubResource("FastNoiseLite_3q655")
+water_threshold = 0.325
 mountain_threshold = 0.37
 range_factor = 70.0
 render_range = 100
@@ -178,15 +291,15 @@ render_range = 100
 material = ExtResource("4_k3ge2")
 script = ExtResource("4_tkitp")
 
-[node name="VisualMap1" type="TileMapLayer" parent="VisualMap"]
-use_parent_material = true
-position = Vector2(45.78, 87.715)
-tile_set = SubResource("TileSet_bxv4k")
-
 [node name="VisualMap2" type="TileMapLayer" parent="VisualMap"]
 use_parent_material = true
 position = Vector2(-53.57, -86.605)
 tile_set = SubResource("TileSet_tkitp")
+
+[node name="VisualMap1" type="TileMapLayer" parent="VisualMap"]
+use_parent_material = true
+position = Vector2(46.78, 87.715)
+tile_set = SubResource("TileSet_bxv4k")
 
 [node name="ResourcePiles" type="Node" parent="."]
 

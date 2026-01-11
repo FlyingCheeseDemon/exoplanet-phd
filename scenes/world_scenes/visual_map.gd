@@ -132,6 +132,7 @@ func after_world_map_update(world_map:TileMapLayer) -> void:
 									[_,_,2]:
 										column = 1
 										orientation = randi_range(0,2)
-
-				both_maps[map_inx].set_cell(Vector2i(i,j),orientation,Vector2i(column,0))
+				
+				var variant:int = randi_range(0,2)
+				both_maps[map_inx].set_cell(Vector2i(i,j),orientation,Vector2i(column,variant))
 			

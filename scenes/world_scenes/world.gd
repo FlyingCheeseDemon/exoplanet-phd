@@ -36,13 +36,13 @@ func _ready() -> void:
 	recolor_world(water_color,land_color)
 	color_tag_array = [Color(),water_color,land_color]
 	visual_world_map.after_world_map_update(world_map)
-	
+
 
 var pan_speed:float = 10
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("zoom_plus"):
-		if camera.zoom[1] < 1:
+		if camera.zoom[1] < 0.3:
 			camera.zoom += Vector2(0.1,0.1)
 	elif Input.is_action_just_pressed("zoom_minus"):
 		if camera.zoom[0] > 0.1:
@@ -170,6 +170,7 @@ func randomize_world_colors() -> void:
 	water_color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
 
 func recolor_world(w_color:Color,l_color:Color) -> void:
+	pass
 	visual_world_map.material.set_shader_parameter("water_color",w_color);
 	visual_world_map.material.set_shader_parameter("land_color",l_color);
 
