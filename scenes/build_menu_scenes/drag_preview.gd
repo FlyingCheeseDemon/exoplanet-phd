@@ -4,6 +4,7 @@ var dragged_building:Building = null:
 	set = set_dragged_building
 	
 @onready var building_icon := $BuildingIcon
+var world_grid:TileMapLayer
 
 func set_dragged_building(building:Building) -> void:
 	dragged_building = building
@@ -20,7 +21,8 @@ func _update_visuals() -> void:
 func _process(delta: float) -> void:
 	if dragged_building == null:
 		return
-	position = get_global_mouse_position()
+	var current_position:Vector2i = world_grid.local_to_map(world_grid.to_local(world_grid.get_local_mouse_position()))
+	position = world_grid.map_to_local(current_position)
 	if Input.is_action_just_pressed("rotate_building"):
 		if dragged_building:
 			dragged_building.rotate_60()

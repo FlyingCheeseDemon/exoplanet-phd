@@ -36,6 +36,7 @@ func _ready() -> void:
 	recolor_world(water_color,land_color)
 	color_tag_array = [Color(),water_color,land_color]
 	visual_world_map.after_world_map_update(world_map)
+	drag_preview.world_grid = world_map
 
 
 var pan_speed:float = 10
@@ -170,7 +171,8 @@ func randomize_world_colors() -> void:
 	water_color = Color.from_hsv(randf(),randf_range(0.1,land_color.s),randf_range(land_color.v,1))
 
 func recolor_world(w_color:Color,l_color:Color) -> void:
-	pass
+	world_map.material.set_shader_parameter("water_color",w_color);
+	world_map.material.set_shader_parameter("land_color",l_color);
 	visual_world_map.material.set_shader_parameter("water_color",w_color);
 	visual_world_map.material.set_shader_parameter("land_color",l_color);
 
